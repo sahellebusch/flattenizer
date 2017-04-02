@@ -1,0 +1,1 @@
+import * as flattenator from './src/flattenator.js'

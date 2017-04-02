@@ -1,0 +1,34 @@
+{
+  "name": "flattenator",
+  "version": "0.0.1",
+  "description": "\"Small library for flattening and unflattening objects.\"",
+  "main": "index.js",
+  "scripts": {
+    "test": "karma start"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/sahellebusch/flattenator.git"
+  },
+  "author": "Sean Hellebusch <sahellebusch@gmail.com>",
+  "license": "ISC",
+  "bugs": {
+    "url": "https://github.com/sahellebusch/flattenator/issues"
+  },
+  "homepage": "https://github.com/sahellebusch/flattenator#readme",
+  "devDependencies": {
+    "babel-cli": "^6.24.0",
+    "babel-core": "^6.24.0",
+    "babel-loader": "^6.4.1",
+    "babel-preset-es2015": "^6.24.0",
+    "jasmine": "^2.5.3",
+    "jasmine-core": "^2.5.2",
+    "jasmine-node": "^1.14.5",
+    "karma": "^1.5.0",
+    "karma-chrome-launcher": "^2.0.0",
+    "karma-jasmine": "^1.1.0",
+    "karma-phantomjs-launcher": "^1.0.4",
+    "karma-webpack": "^2.0.3",
+    "webpack": "^2.3.2"
+  }
+}
