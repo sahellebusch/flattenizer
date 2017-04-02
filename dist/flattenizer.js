@@ -4,9 +4,9 @@
 	else if(typeof define === 'function' && define.amd)
 		define([], factory);
 	else if(typeof exports === 'object')
-		exports["Flattenator"] = factory();
+		exports["Flattenizer"] = factory();
 	else
-		root["Flattenator"] = factory();
+		root["Flattenizer"] = factory();
 })(this, function() {
 return /******/ (function(modules) { // webpackBootstrap
 /******/ 	// The module cache
@@ -167,9 +167,9 @@ var explodeProperty = function explodeProperty(currUnflattened, prop, flattenedO
 "use strict";
 
 
-var _flattenator = __webpack_require__(0);
+var _flattenizer = __webpack_require__(0);
 
-var flattenator = _interopRequireWildcard(_flattenator);
+var flattenator = _interopRequireWildcard(_flattenizer);
 
 function _interopRequireWildcard(obj) { if (obj && obj.__esModule) { return obj; } else { var newObj = {}; if (obj != null) { for (var key in obj) { if (Object.prototype.hasOwnProperty.call(obj, key)) newObj[key] = obj[key]; } } newObj.default = obj; return newObj; } }
 

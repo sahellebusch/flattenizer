@@ -1,1 +1,1 @@
-import * as flattenator from './src/flattenator.js'
+import * as flattenizer from './src/flattenizer.js'

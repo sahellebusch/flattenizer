@@ -6,10 +6,10 @@ module.exports = function(config) {
         frameworks: ['jasmine'],
         files: [
             'spec/**/*Spec.js',
-            'src/flattenator.js'
+            'src/flattenizer.js'
         ],
         preprocessors: {
-            'src/flattenator.js': ['webpack'],
+            'src/flattenizer.js': ['webpack'],
             'spec/**/*Spec.js': ['webpack'],
         },
         webpack: webpackConfig,

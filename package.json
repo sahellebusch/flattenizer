@@ -1,5 +1,5 @@
 {
-  "name": "flattenator",
+  "name": "flattenizer",
   "version": "0.0.1",
   "description": "\"Small library for flattening and unflattening objects.\"",
   "main": "index.js",
@@ -8,14 +8,14 @@
   },
   "repository": {
     "type": "git",
-    "url": "git+https://github.com/sahellebusch/flattenator.git"
+    "url": "git+https://github.com/sahellebusch/flattenizer.git"
   },
   "author": "Sean Hellebusch <sahellebusch@gmail.com>",
   "license": "ISC",
   "bugs": {
-    "url": "https://github.com/sahellebusch/flattenator/issues"
+    "url": "https://github.com/sahellebusch/flattenizer/issues"
   },
-  "homepage": "https://github.com/sahellebusch/flattenator#readme",
+  "homepage": "https://github.com/sahellebusch/flattenizer#readme",
   "devDependencies": {
     "babel-cli": "^6.24.0",
     "babel-core": "^6.24.0",

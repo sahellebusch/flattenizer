@@ -4,10 +4,10 @@ const path = require('path');
 module.exports = {
     entry: path.resolve(__dirname, 'index.js'),
     output: {
-        library: 'Flattenator',
+        library: 'Flattenizer',
         libraryTarget: 'umd',
         path: path.resolve(__dirname, 'dist'),
-        filename: 'flattenator.js',
+        filename: 'flattenizer.js',
     },
     module: {
         loaders: [
