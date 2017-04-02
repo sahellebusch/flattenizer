@@ -1,1 +1,1 @@
-# flatenator
+# Flattenizer
