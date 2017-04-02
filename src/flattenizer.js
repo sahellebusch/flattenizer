@@ -69,3 +69,5 @@ const explodeProperty = (currUnflattened, prop, flattenedObj) => {
 
     currUnflattened[keys[lastKeyIndex]] = value;
 };
+
+export default { flattenate, unflattenate }

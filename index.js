@@ -1,1 +1,0 @@
-import * as flattenizer from './src/flattenizer.js'
