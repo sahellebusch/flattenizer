@@ -1,6 +1,6 @@
 {
   "name": "flattenizer",
-  "version": "0.0.1",
+  "version": "0.0.2",
   "description": "\"Small library for flattening and unflattening objects.\"",
   "main": "index.js",
   "scripts": {
