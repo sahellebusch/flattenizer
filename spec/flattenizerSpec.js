@@ -109,7 +109,25 @@ describe('Flattenator!', () => {
             };
 
             expect(flatten(unflattened)).toEqual(expected);
-        })
+        });
+
+        it('will retain undefined values as undefined', () => {
+            let unflattened = {
+                prop1: undefined,
+                prop2: {
+                    subProp2: {
+                        subSubProp1: 12
+                    }
+                }
+            };
+
+            let expected = {
+                'prop1': undefined,
+                'prop2.subProp2.subSubProp1': 12
+            };
+
+            expect(flatten(unflattened)).toEqual(expected);
+        });
 
     });
 

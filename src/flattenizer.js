@@ -5,24 +5,23 @@
  * @returns {Object} - the flattened object, empty if provided object is undefined
  */
 export const flatten = (obj) => {
-   let flattened = {};
+    if(typeof obj === 'undefined')
+        return {};
 
-    for (let key in obj) {
-        if (!obj.hasOwnProperty(key))
-            continue;
-
-        if (typeof obj[key] === 'object') {
-            let flatObject = flatten(obj[key]);
+    return Object.keys(obj).reduce((acc, value) => {
+        if (typeof obj[value] === 'object') {
+            let flatObject = flatten(obj[value]);
             for (let subKey in flatObject) {
                 // append to create new key value and assign it's value
-                flattened[key + '.' + subKey] = flatObject[subKey];
+                acc[value + '.' + subKey] = flatObject[subKey];
             }
-        } else {
-            flattened[key] = obj[key];
         }
-    }
+        else {
+            acc[value] = obj[value];
+        }
 
-    return flattened;
+        return acc;
+    }, {});
 };
 
 /**
@@ -69,4 +68,4 @@ const explodeProperty = (currUnflattened, prop, flattenedObj) => {
     currUnflattened[keys[lastKeyIndex]] = value;
 };
 
-export default { flatten, unflatten }
+export default {flatten, unflatten}
