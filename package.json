@@ -1,9 +1,11 @@
 {
   "name": "flattenizer",
-  "version": "0.0.3",
+  "version": "0.0.4",
   "description": "\"Small library for flattening and unflattening objects.\"",
   "main": "index.js",
   "scripts": {
+    "build": "webpack",
+    "build:min": "webpack --env build",
     "test": "karma start"
   },
   "repository": {

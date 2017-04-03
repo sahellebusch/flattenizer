@@ -1,10 +1,10 @@
 /**
- * Flattens a valid object
+ * Flattens an object
  *
- * @param obj the object to unflatten
- * @returns {object} the flattened object
+ * @param {Object} obj - the object to unflatten
+ * @returns {Object} - the flattened object, empty if provided object is undefined
  */
-export const flattenate = (obj) => {
+export const flatten = (obj) => {
    let flattened = {};
 
     for (let key in obj) {
@@ -12,13 +12,12 @@ export const flattenate = (obj) => {
             continue;
 
         if (typeof obj[key] === 'object') {
-            let flatObject = flattenate(obj[key]);
+            let flatObject = flatten(obj[key]);
             for (let subKey in flatObject) {
                 // append to create new key value and assign it's value
                 flattened[key + '.' + subKey] = flatObject[subKey];
             }
         } else {
-            // be sure all property values are strings!
             flattened[key] = obj[key];
         }
     }
@@ -27,12 +26,12 @@ export const flattenate = (obj) => {
 };
 
 /**
- * Unflattens a flattened object
+ * Unflattens an object with compressed keys.
  *
- * @param flattened
- * @returns {object} the unflattened object
+ * @param {Object} flattened - object to unflatten
+ * @returns {Object} - the unflattened object, empty if provided object is undefined
  */
-export const unflattenate = flattened => {
+export const unflatten = flattened => {
     let unflattened = {};
 
     for (let prop in flattened) {
@@ -47,9 +46,9 @@ export const unflattenate = flattened => {
 /**
  * Explodes a flattened object key.
  *
- * @param currUnflattened the current unflattened object
- * @param prop the current property to explode
- * @param flattenedObj the current flattened object
+ * @param {Object} currUnflattened the current unflattened object
+ * @param {String} prop the current property to explode
+ * @param {Object} flattenedObj the current flattened object
  */
 const explodeProperty = (currUnflattened, prop, flattenedObj) => {
     let keys = prop.split('.');
@@ -70,4 +69,4 @@ const explodeProperty = (currUnflattened, prop, flattenedObj) => {
     currUnflattened[keys[lastKeyIndex]] = value;
 };
 
-export default { flattenate, unflattenate }
+export default { flatten, unflatten }

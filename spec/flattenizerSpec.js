@@ -1,15 +1,15 @@
 'use strict';
-import {flattenate, unflattenate} from '../src/flattenizer';
+import {flatten, unflatten} from '../src/flattenizer';
 
 describe('Flattenator!', () => {
-    describe('#flattenate', () => {
+    describe('#flatten', () => {
 
         it('will return an empty object if undefined is passed in', () => {
-            expect(flattenate(undefined)).toEqual({})
+            expect(flatten(undefined)).toEqual({})
         });
 
         it('can flatten an empty object', () => {
-            expect(flattenate({})).toEqual({});
+            expect(flatten({})).toEqual({});
         });
 
         it('can flatten an object with a single property', () => {
@@ -17,7 +17,7 @@ describe('Flattenator!', () => {
                 prop: 'value'
             };
 
-            expect(flattenate(unflattened)).toEqual(unflattened);
+            expect(flatten(unflattened)).toEqual(unflattened);
         });
 
         it('can flatten an object with multiple properties', () => {
@@ -26,7 +26,7 @@ describe('Flattenator!', () => {
                 prop2: 'value2'
             };
 
-            expect(flattenate(unflattened)).toEqual(unflattened);
+            expect(flatten(unflattened)).toEqual(unflattened);
         });
 
         it('can flatten nested objects', () => {
@@ -46,7 +46,7 @@ describe('Flattenator!', () => {
                 'prop2.subProp2.subSubProp1': 12
             };
 
-            expect(flattenate(unflattened)).toEqual(expected);
+            expect(flatten(unflattened)).toEqual(expected);
         });
 
         it('can flatten arrays', () => {
@@ -63,7 +63,7 @@ describe('Flattenator!', () => {
                 'arrayProp.1': 12
             };
 
-            expect(flattenate(unflattened)).toEqual(expected);
+            expect(flatten(unflattened)).toEqual(expected);
         });
 
         it('can flatten objects composed of nested objects and arrays', () => {
@@ -108,18 +108,18 @@ describe('Flattenator!', () => {
                 'friends.2.name': 'Lynnette Gilmore'
             };
 
-            expect(flattenate(unflattened)).toEqual(expected);
+            expect(flatten(unflattened)).toEqual(expected);
         })
 
     });
 
-    describe('#unflattenate', () => {
+    describe('#unflatten', () => {
         it('will return an empty object if undefined is passed in', () => {
-            expect(unflattenate(undefined)).toEqual({})
+            expect(unflatten(undefined)).toEqual({})
         });
 
         it('can unflatten an empty object', () => {
-            expect(unflattenate({})).toEqual({});
+            expect(unflatten({})).toEqual({});
         });
 
 
@@ -128,7 +128,7 @@ describe('Flattenator!', () => {
                 prop: 'value'
             };
 
-            expect(unflattenate(unflattened)).toEqual(unflattened);
+            expect(unflatten(unflattened)).toEqual(unflattened);
         });
 
         it('can unflatten an object with multiple properties', () => {
@@ -137,7 +137,7 @@ describe('Flattenator!', () => {
                 prop2: 'value2'
             };
 
-            expect(unflattenate(unflattened)).toEqual(unflattened);
+            expect(unflatten(unflattened)).toEqual(unflattened);
         });
 
         it('can unflatten nested objects', () => {
@@ -159,7 +159,7 @@ describe('Flattenator!', () => {
             };
 
 
-            expect(unflattenate(flattened)).toEqual(expected);
+            expect(unflatten(flattened)).toEqual(expected);
         });
 
         it('can unflatten arrays', () => {
@@ -176,7 +176,7 @@ describe('Flattenator!', () => {
                 ]
             };
 
-            expect(unflattenate(flattened)).toEqual(expected);
+            expect(unflatten(flattened)).toEqual(expected);
         });
 
         it('can unflatten objects composed of nested objects and arrays', () => {
@@ -221,7 +221,7 @@ describe('Flattenator!', () => {
                 ]
             };
 
-            expect(unflattenate(flattened)).toEqual(expected);
+            expect(unflatten(flattened)).toEqual(expected);
         })
     });
 });
