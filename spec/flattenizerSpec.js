@@ -2,7 +2,7 @@
 import {flatten, unflatten} from '../src/flattenizer';
 
 describe('Flattenator!', () => {
-    describe('#flatten', () => {
+    describe('.flatten', () => {
 
         it('will return an empty object if undefined is passed in', () => {
             expect(flatten(undefined)).toEqual({})
@@ -131,7 +131,7 @@ describe('Flattenator!', () => {
 
     });
 
-    describe('#unflatten', () => {
+    describe('.unflatten', () => {
         it('will return an empty object if undefined is passed in', () => {
             expect(unflatten(undefined)).toEqual({})
         });
@@ -175,7 +175,6 @@ describe('Flattenator!', () => {
                     }
                 }
             };
-
 
             expect(unflatten(flattened)).toEqual(expected);
         });
@@ -240,6 +239,24 @@ describe('Flattenator!', () => {
             };
 
             expect(unflatten(flattened)).toEqual(expected);
-        })
+        });
+
+        it('will retain undefined values as undefined', () => {
+            let flattened = {
+                'prop1': undefined,
+                'prop2.subProp2.subSubProp1': 12
+            };
+
+            let expected = {
+                prop1: undefined,
+                prop2: {
+                    subProp2: {
+                        subSubProp1: 12
+                    }
+                }
+            };
+
+            expect(unflatten(flattened)).toEqual(expected);
+        });
     });
 });

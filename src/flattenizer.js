@@ -1,36 +1,53 @@
 /**
+ * Module to flatten and unflatten objects.
+ *
+ * @module Flattenizer
+ */
+
+/**
  * Flattens an object
  *
- * @param {Object} obj - the object to unflatten
+ * @function
+ * @param {Object} unflattened - the object to flatten
  * @returns {Object} - the flattened object, empty if provided object is undefined
+ * @public
  */
-export const flatten = (obj) => {
-    if(typeof obj === 'undefined')
+export const flatten = unflattened => {
+    if (typeof unflattened === 'undefined')
         return {};
 
-    return Object.keys(obj).reduce((acc, value) => {
-        if (typeof obj[value] === 'object') {
-            let flatObject = flatten(obj[value]);
+    let flattened = {};
+
+    for (let key in unflattened) {
+        if (!unflattened.hasOwnProperty(key))
+            continue;
+
+        if (typeof unflattened[key] === 'object') {
+            let flatObject = flatten(unflattened[key]);
             for (let subKey in flatObject) {
                 // append to create new key value and assign it's value
-                acc[value + '.' + subKey] = flatObject[subKey];
+                flattened[key + '.' + subKey] = flatObject[subKey];
             }
+        } else {
+            flattened[key] = unflattened[key];
         }
-        else {
-            acc[value] = obj[value];
-        }
+    }
 
-        return acc;
-    }, {});
+    return flattened;
 };
 
 /**
  * Unflattens an object with compressed keys.
  *
+ * @function
  * @param {Object} flattened - object to unflatten
  * @returns {Object} - the unflattened object, empty if provided object is undefined
+ * @public
  */
 export const unflatten = flattened => {
+    if (typeof flattened === 'undefined')
+        return {};
+
     let unflattened = {};
 
     for (let prop in flattened) {
@@ -45,20 +62,23 @@ export const unflatten = flattened => {
 /**
  * Explodes a flattened object key.
  *
+ * @function
  * @param {Object} currUnflattened the current unflattened object
- * @param {String} prop the current property to explode
+ * @param {String} key the current property to explode
  * @param {Object} flattenedObj the current flattened object
+ * @private
  */
-const explodeProperty = (currUnflattened, prop, flattenedObj) => {
-    let keys = prop.split('.');
-    let value = flattenedObj[prop];
-    let lastKeyIndex = keys.length - 1;
+const explodeProperty = (currUnflattened, key, flattenedObj) => {
+    const keys = key.split('.');
+    const value = flattenedObj[key];
+    const lastKeyIndex = keys.length - 1;
 
     for (let idx = 0; idx < lastKeyIndex; idx++) {
-        let currKey = keys[idx];
+        const currKey = keys[idx];
+        let nextKeyVal;
 
         if (!(currKey in currUnflattened)) {
-            let nextKeyVal = parseInt(keys[idx + 1], 10);
+            nextKeyVal = parseInt(keys[idx + 1], 10);
             currUnflattened[currKey] = isNaN(nextKeyVal) ? {} : [];
         }
 

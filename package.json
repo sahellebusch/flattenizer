@@ -1,7 +1,7 @@
 {
   "name": "flattenizer",
   "version": "0.0.4",
-  "description": "\"Small library for flattening and unflattening objects.\"",
+  "description": "Small library for flattening and unflattening objects.",
   "main": "index.js",
   "scripts": {
     "build": "webpack",
