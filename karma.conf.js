@@ -1,18 +1,35 @@
 const webpackConfig = require('./webpack.config.js');
+const path = require('path');
 
 module.exports = function(config) {
     config.set({
         basePath: '',
         frameworks: ['jasmine'],
         files: [
-            'spec/**/*Spec.js',
-            'src/flattenizer.js'
+            'spec/index.js'
+            // 'spec/index.js',
+            // // 'spec/**/*Spec.js',
+            // 'src/flattenizer.js'
         ],
         preprocessors: {
-            'src/flattenizer.js': ['webpack'],
-            'spec/**/*Spec.js': ['webpack'],
+            'spec/index.js': 'webpack'
+            // 'src/flattenizer.js': ['webpack'],
+            // 'spec/index.js': ['webpack']
+            // // 'spec/**/*Spec.js': ['webpack'],
         },
         webpack: webpackConfig,
+        // webpack: {
+        //     module: {
+        //         rules: [
+        //             // instrument only testing sources with Istanbul
+        //             {
+        //                 test: /\.js$/,
+        //                 include: path.resolve(__dirname, 'src/'),
+        //                 loader: 'istanbul-instrumenter-loader'
+        //             }
+        //         ]
+        //     }
+        // },
         webpackMiddleware: {
             noInfo: true
         },
@@ -22,6 +39,14 @@ module.exports = function(config) {
         autoWatch: true,
         browsers: ['PhantomJS'],
         singleRun: true,
-        concurrency: Infinity
+        concurrency: Infinity,
+
+
+        // start
+        reporters: ['progress', 'coverage-istanbul'],
+        coverageIstanbulReporter: {
+            reports: [ 'text-summary' ],
+            fixWebpackSourcePaths: true
+        }
     })
 };

@@ -1,5 +1,5 @@
 'use strict';
-import {flatten, unflatten} from '../src/flattenizer';
+// import {flatten, unflatten} from '../src/flattenizer';
 
 describe('Flattenator!', () => {
     describe('.flatten', () => {

@@ -35,6 +35,17 @@ module.exports = {
                     presets: ['es2015']
                 }
             }
+        ],
+        rules: [
+            // instrument only testing sources with Istanbul
+            {
+                test: /\.js$/,
+                include: path.resolve(__dirname, 'spec/index.js'),
+                loader: 'istanbul-instrumenter-loader',
+                query: {
+                    esModules: true
+                }
+            }
         ]
     },
     plugins: plugins,
