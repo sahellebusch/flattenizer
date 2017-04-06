@@ -3,7 +3,7 @@ Functions to flatten and unflatten nested JavaScript objects into a single level
 
 [![NPM](https://nodei.co/npm/flattenizer.png)](https://npmjs.org/package/flattenizer)
 
-[![build status](https://secure.travis-ci.org/sahellebusch/flattenizer.png)](http://travis-ci.org/sahellebusch/flattenizer)
+[![build status](https://api.travis-ci.org/sahellebusch/flattenizer.png?branch=master)](http://travis-ci.org/sahellebusch/flattenizer)
 [![npm version](https://badge.fury.io/js/flattenizer.svg)](https://badge.fury.io/js/flattenizer)
 
 
