@@ -1,8 +1,8 @@
 {
   "name": "flattenizer",
-  "version": "1.0.1",
+  "version": "1.0.2",
   "description": "Small library for flattening and unflattening objects.",
-  "main": "index.js",
+  "main": "./lib/flattenizer.min.js",
   "scripts": {
     "build": "webpack",
     "build:min": "webpack --env build",
@@ -13,7 +13,7 @@
     "url": "git+https://github.com/sahellebusch/flattenizer.git"
   },
   "author": "Sean Hellebusch <sahellebusch@gmail.com>",
-  "license": "ISC",
+  "license": "MIT",
   "bugs": {
     "url": "https://github.com/sahellebusch/flattenizer/issues"
   },
