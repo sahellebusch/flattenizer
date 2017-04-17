@@ -7,14 +7,25 @@
 /**
  * Flattens an object
  *
+ * @memberOf module:Flattenizer
  * @function
- * @param {Object} unflattened - the object to flatten
- * @returns {Object} - the flattened object, empty if provided object is undefined
+ * @param {Object} unflattened     - the object to flatten
+ * @param {String} [delimiter='.'] - the delimiter to be used when flattening the object
+ * @returns {Object}               - the flattened object, empty if provided object is undefined
+ * @throws {TypeError}             - if object passed in is not an object or if the delimiter is not a string
  * @public
  */
-export const flatten = unflattened => {
+export const flatten = (unflattened, delimiter = '.') => {
     if (typeof unflattened === 'undefined')
         return {};
+
+    if (typeof unflattened !== 'object') {
+        throw new TypeError('unflattened is not an object');
+    }
+
+    if(typeof delimiter !== 'string') {
+        throw new TypeError('delimiter must be a string');
+    }
 
     let flattened = {};
 
@@ -23,10 +34,10 @@ export const flatten = unflattened => {
             continue;
 
         if (typeof unflattened[key] === 'object') {
-            let flatObject = flatten(unflattened[key]);
+            let flatObject = flatten(unflattened[key], delimiter);
             for (let subKey in flatObject) {
                 // append to create new key value and assign it's value
-                flattened[key + '.' + subKey] = flatObject[subKey];
+                flattened[`${key}${delimiter}${subKey}`] = flatObject[subKey];
             }
         } else {
             flattened[key] = unflattened[key];
@@ -39,20 +50,31 @@ export const flatten = unflattened => {
 /**
  * Unflattens an object with compressed keys.
  *
+ * @memberOf module:Flattenizer
  * @function
- * @param {Object} flattened - object to unflatten
- * @returns {Object} - the unflattened object, empty if provided object is undefined
+ * @param {Object} flattened       - object to unflatten
+ * @param {String} [delimiter='.'] - the delimiter to be used when unflattening the object
+ * @returns {Object}               - the unflattened object, empty if provided object is undefined
+ * @throws {TypeError}             - if object passed in is not an object or if the delimiter is not a string
  * @public
  */
-export const unflatten = flattened => {
+export const unflatten = (flattened, delimiter = '.') => {
     if (typeof flattened === 'undefined')
         return {};
+
+    if (typeof flattened !== 'object') {
+        throw new TypeError('flattened is not an object');
+    }
+
+    if(typeof delimiter !== 'string') {
+        throw new TypeError('delimiter must be a string');
+    }
 
     let unflattened = {};
 
     for (let prop in flattened) {
         if (flattened.hasOwnProperty(prop)) {
-            explodeProperty(unflattened, prop, flattened);
+            explodeProperty(unflattened, prop, flattened, delimiter);
         }
     }
 
@@ -63,13 +85,14 @@ export const unflatten = flattened => {
  * Explodes a flattened object key.
  *
  * @function
- * @param {Object} currUnflattened the current unflattened object
- * @param {String} key the current property to explode
- * @param {Object} flattenedObj the current flattened object
+ * @param {Object} currUnflattened - the current unflattened object
+ * @param {String} key             - the current property to explode
+ * @param {Object} flattenedObj    - the current flattened object
+ * @param {String} delimiter       - the delimiter to be used when unflattening the object
  * @private
  */
-const explodeProperty = (currUnflattened, key, flattenedObj) => {
-    const keys = key.split('.');
+const explodeProperty = (currUnflattened, key, flattenedObj, delimiter) => {
+    const keys = key.split(delimiter);
     const value = flattenedObj[key];
     const lastKeyIndex = keys.length - 1;
 

@@ -1,8 +1,57 @@
 'use strict';
-import {flatten, unflatten} from '../src/flattenizer';
+import { flatten, unflatten } from '../src/flattenizer';
 
-describe('Flattenator!', () => {
+describe('Flattenizer!', () => {
     describe('.flatten', () => {
+
+        it('will throw an error if a value passed in is not undef, but also not an object[string]', () => {
+            expect(() => {
+                flatten('boom')
+            }).toThrow(new TypeError('unflattened is not an object'));
+        });
+
+        it('will throw an error if a value passed in is not undef, but also not an object[number]', () => {
+            expect(() => {
+                flatten(5)
+            }).toThrow(new TypeError('unflattened is not an object'));
+        });
+
+        it('will throw an error if a value passed in is not undef, but also not an object[function]', () => {
+            expect(() => {
+                flatten(() => 'why would you do this...')
+            }).toThrow(new TypeError('unflattened is not an object'));
+        });
+
+        // TODO: travis CI doens't support Symbol, in fact not many browers do.  until then, commenting this out.
+        // it('will throw an error if a value passed in is not undef, but also not an object[function]', () => {
+        //     expect(() => {
+        //         flatten(Symbol('boom'))
+        //     }).toThrow(new TypeError('unflattened is not an object'));
+        // });
+        //
+        // it('will throw an error if the delimiter passed in is not a string[symbol]', () => {
+        //     expect(() => {
+        //         flatten({}, Symbol('boom'));
+        //     }).toThrow(new TypeError('delimiter must be a string'));
+        // });
+
+        it('will throw an error if the delimiter passed in is not a string[object]', () => {
+            expect(() => {
+                flatten({}, {});
+            }).toThrow(new TypeError('delimiter must be a string'));
+        });
+
+        it('will throw an error if the delimiter passed in is not a string[number]', () => {
+            expect(() => {
+                flatten({}, 1);
+            }).toThrow(new TypeError('delimiter must be a string'));
+        });
+
+        it('will throw an error if the delimiter passed in is not a string[function]', () => {
+            expect(() => {
+                flatten({}, () => 'why would you ever do this...');
+            }).toThrow(new TypeError('delimiter must be a string'));
+        });
 
         it('will return an empty object if undefined is passed in', () => {
             expect(flatten(undefined)).toEqual({})
@@ -49,6 +98,46 @@ describe('Flattenator!', () => {
             expect(flatten(unflattened)).toEqual(expected);
         });
 
+        it('can flatten with a custom delimiter', () => {
+            let unflattened = {
+                prop1: {
+                    subProp1: 'value'
+                },
+                prop2: {
+                    subProp2: {
+                        subSubProp1: 12
+                    }
+                }
+            };
+
+            let expected = {
+                'prop1|subProp1': 'value',
+                'prop2|subProp2|subSubProp1': 12
+            };
+
+            expect(flatten(unflattened, '|')).toEqual(expected);
+        });
+
+        it('can flatten with a complicated custom delimiter', () => {
+            let unflattened = {
+                prop1: {
+                    subProp1: 'value'
+                },
+                prop2: {
+                    subProp2: {
+                        subSubProp1: 12
+                    }
+                }
+            };
+
+            let expected = {
+                'prop1%delim%subProp1': 'value',
+                'prop2%delim%subProp2%delim%subSubProp1': 12
+            };
+
+            expect(flatten(unflattened, '%delim%')).toEqual(expected);
+        });
+
         it('can flatten arrays', () => {
             let unflattened = {
                 prop: 'not array',
@@ -82,9 +171,9 @@ describe('Flattenator!', () => {
                     'id'
                 ],
                 'friends': [
-                    {'id': 0, 'name': 'Gentry Martin'},
-                    {'id': 1, 'name': 'Owen Willis'},
-                    {'id': 2, 'name': 'Lynnette Gilmore'}
+                    { 'id': 0, 'name': 'Gentry Martin' },
+                    { 'id': 1, 'name': 'Owen Willis' },
+                    { 'id': 2, 'name': 'Lynnette Gilmore' }
                 ]
             };
 
@@ -132,6 +221,62 @@ describe('Flattenator!', () => {
     });
 
     describe('.unflatten', () => {
+
+        it('will throw an error if a value passed in is not undef, but also not an object[string]', () => {
+            expect(() => {
+                unflatten('boom')
+            }).toThrow(new TypeError('flattened is not an object'));
+        });
+
+        it('will throw an error if a value passed in is not undef, but also not an object[number]', () => {
+            expect(() => {
+                unflatten(5)
+            }).toThrow(new TypeError('flattened is not an object'));
+        });
+
+        it('will throw an error if a value passed in is not undef, but also not an object[function]', () => {
+            expect(() => {
+                unflatten(() => {return  'why would you do this...'})
+            }).toThrow(new TypeError('flattened is not an object'));
+        });
+
+        // TODO: travis CI doens't support Symbol, in fact not many browers do.  until then, commenting this out.
+        // it('will throw an error if a value passed in is not undef, but also not an object[symbol]', () => {
+        //     expect(() => {
+        //         unflatten(Symbol('boom'))
+        //     }).toThrow(new TypeError('flattened is not an object'));
+        // });
+        //
+        // it('will throw an error if the delimiter passed in is not a string[symbol]', () => {
+        //     expect(() => {
+        //         unflatten({}, Symbol('boom'));
+        //     }).toThrow(new TypeError('delimiter must be a string'));
+        // });
+
+        it('will throw an error if the delimiter passed in is not a string[object]', () => {
+            expect(() => {
+                unflatten({}, {});
+            }).toThrow(new TypeError('delimiter must be a string'));
+        });
+
+        it('will throw an error if the delimiter passed in is not a string[number]', () => {
+            expect(() => {
+                unflatten({}, 1);
+            }).toThrow(new TypeError('delimiter must be a string'));
+        });
+
+        it('will throw an error if the delimiter passed in is not a string[function]', () => {
+            expect(() => {
+                unflatten({}, () => {
+                    return 'why would you ever do this...'
+                });
+            }).toThrow(new TypeError('delimiter must be a string'));
+        });
+
+        it('will return an empty object if undefined is passed in', () => {
+            expect(unflatten(undefined)).toEqual({})
+        });
+
         it('will return an empty object if undefined is passed in', () => {
             expect(unflatten(undefined)).toEqual({})
         });
@@ -139,7 +284,6 @@ describe('Flattenator!', () => {
         it('can unflatten an empty object', () => {
             expect(unflatten({})).toEqual({});
         });
-
 
         it('can unflatten an object with a single property', () => {
             let unflattened = {
@@ -164,7 +308,6 @@ describe('Flattenator!', () => {
                 'prop2.subProp2.subSubProp1': 12
             };
 
-
             let expected = {
                 prop1: {
                     subProp1: 'value'
@@ -177,6 +320,46 @@ describe('Flattenator!', () => {
             };
 
             expect(unflatten(flattened)).toEqual(expected);
+        });
+
+        it('can unflatten objects with a custom delimiter', () => {
+            let flattened = {
+                'prop1|subProp1': 'value',
+                'prop2|subProp2|subSubProp1': 12
+            };
+
+            let expected = {
+                prop1: {
+                    subProp1: 'value'
+                },
+                prop2: {
+                    subProp2: {
+                        subSubProp1: 12
+                    }
+                }
+            };
+
+            expect(unflatten(flattened, '|')).toEqual(expected);
+        });
+
+        it('can unflatten objects with a complicated delimiter', () => {
+            let flattened = {
+                'prop1%delim%subProp1': 'value',
+                'prop2%delim%subProp2%delim%subSubProp1': 12
+            };
+
+            let expected = {
+                prop1: {
+                    subProp1: 'value'
+                },
+                prop2: {
+                    subProp2: {
+                        subSubProp1: 12
+                    }
+                }
+            };
+
+            expect(unflatten(flattened, '%delim%')).toEqual(expected);
         });
 
         it('can unflatten arrays', () => {
@@ -232,9 +415,9 @@ describe('Flattenator!', () => {
                     'id'
                 ],
                 'friends': [
-                    {'id': 0, 'name': 'Gentry Martin'},
-                    {'id': 1, 'name': 'Owen Willis'},
-                    {'id': 2, 'name': 'Lynnette Gilmore'}
+                    { 'id': 0, 'name': 'Gentry Martin' },
+                    { 'id': 1, 'name': 'Owen Willis' },
+                    { 'id': 2, 'name': 'Lynnette Gilmore' }
                 ]
             };
 

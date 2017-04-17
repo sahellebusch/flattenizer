@@ -20,8 +20,24 @@ module.exports = function(config) {
         colors: true,
         logLevel: config.LOG_INFO,
         autoWatch: true,
-        browsers: ['PhantomJS'],
+        browsers: ['ChromeHeadless, ChromeTravis'],
         singleRun: true,
-        concurrency: Infinity
+        concurrency: Infinity,
+        //props to JohnFoley3! - https://gist.github.com/johnfoley3/4ecbb7f4044746f1b71d0afbb59adf3a
+        customLaunchers: {
+            'ChromeHeadless': {
+                base: 'Chromium', // Can be Chrome, ChromeCanary, or Chromium
+                flags: [
+                    // See https://chromium.googlesource.com/chromium/src/+/lkgr/headless/README.md
+                    '--headless',
+                    '--disable-gpu',
+                    '--remote-debugging-port=9222'
+                ]
+            },
+            'ChromeTravis': {
+                base: 'Chrome', // Can be Chrome, ChromeCanary, or Chromium
+                flags: ['--no-sandbox']
+            },
+        }
     })
 };

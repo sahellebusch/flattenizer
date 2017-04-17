@@ -58,9 +58,12 @@ const flattenizer = require('flattenizer');
 /**
  * Flattens an object.
  *
+ * @memberOf module:Flattenizer
  * @function
- * @param {Object} unflattened - the object to flatten
- * @returns {Object} - the flattened object, empty if provided object is undefined
+ * @param {Object} unflattened     - the object to flatten
+ * @param {String} [delimiter='.'] - the delimiter to be used when flattening the object
+ * @returns {Object}               - the flattened object, empty if provided object is undefined
+ * @throws {TypeError}             - if object passed in is not an object or if the delimiter is not a string
  * @public
  */
 ``` 
@@ -70,9 +73,12 @@ const flattenizer = require('flattenizer');
 /**
  * Unflattens an object with compressed keys.
  *
+ * @memberOf module:Flattenizer
  * @function
- * @param {Object} flattened - object to unflatten
- * @returns {Object} - the unflattened object, empty if provided object is undefined
+ * @param {Object} flattened       - object to unflatten
+ * @param {String} [delimiter='.'] - the delimiter to be used when unflattening the object
+ * @returns {Object}               - the unflattened object, empty if provided object is undefined
+ * @throws {TypeError}             - if object passed in is not an object or if the delimiter is not a string
  * @public
  */
 ```
