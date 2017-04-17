@@ -6,7 +6,8 @@
   "scripts": {
     "build": "webpack",
     "build:min": "webpack --env build",
-    "test": "karma start"
+    "test": "karma start",
+    "generate-docs": "node_modules/.bin/jsdoc --configure .jsdoc.json --verbose"
   },
   "repository": {
     "type": "git",
@@ -26,6 +27,7 @@
     "jasmine": "^2.5.3",
     "jasmine-core": "^2.5.2",
     "jasmine-node": "^1.14.5",
+    "jsdoc": "^3.4.3",
     "karma": "^1.5.0",
     "karma-chrome-launcher": "^2.0.0",
     "karma-jasmine": "^1.1.0",
