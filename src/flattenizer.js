@@ -16,35 +16,31 @@
  * @public
  */
 export const flatten = (unflattened, delimiter = '.') => {
-    if (typeof unflattened === 'undefined')
-        return {};
+  if (typeof unflattened === 'undefined' || unflattened === null) return {};
 
-    if (typeof unflattened !== 'object') {
-        throw new TypeError('unflattened is not an object');
+  if (typeof unflattened !== 'object') {
+    throw new TypeError('unflattened is not an object');
+  }
+
+  if (typeof delimiter !== 'string') {
+    throw new TypeError('delimiter must be a string');
+  }
+
+  let flattened = {};
+
+  Object.entries(unflattened).forEach(([key, value]) => {
+    if (typeof value === 'object' && value !== null) {
+      let flatObject = flatten(value, delimiter);
+      for (let subKey in flatObject) {
+        // append to create new key value and assign it's value
+        flattened[`${key}${delimiter}${subKey}`] = flatObject[subKey];
+      }
+    } else {
+      flattened[key] = value;
     }
+  });
 
-    if(typeof delimiter !== 'string') {
-        throw new TypeError('delimiter must be a string');
-    }
-
-    let flattened = {};
-
-    for (let key in unflattened) {
-        if (!unflattened.hasOwnProperty(key))
-            continue;
-
-        if (typeof unflattened[key] === 'object') {
-            let flatObject = flatten(unflattened[key], delimiter);
-            for (let subKey in flatObject) {
-                // append to create new key value and assign it's value
-                flattened[`${key}${delimiter}${subKey}`] = flatObject[subKey];
-            }
-        } else {
-            flattened[key] = unflattened[key];
-        }
-    }
-
-    return flattened;
+  return flattened;
 };
 
 /**
@@ -59,26 +55,23 @@ export const flatten = (unflattened, delimiter = '.') => {
  * @public
  */
 export const unflatten = (flattened, delimiter = '.') => {
-    if (typeof flattened === 'undefined')
-        return {};
+  if (typeof flattened === 'undefined') return {};
 
-    if (typeof flattened !== 'object') {
-        throw new TypeError('flattened is not an object');
-    }
+  if (typeof flattened !== 'object') {
+    throw new TypeError('flattened is not an object');
+  }
 
-    if(typeof delimiter !== 'string') {
-        throw new TypeError('delimiter must be a string');
-    }
+  if (typeof delimiter !== 'string') {
+    throw new TypeError('delimiter must be a string');
+  }
 
-    let unflattened = {};
+  let unflattened = {};
 
-    for (let prop in flattened) {
-        if (flattened.hasOwnProperty(prop)) {
-            explodeProperty(unflattened, prop, flattened, delimiter);
-        }
-    }
+  Object.keys(flattened).forEach(key => {
+    explodeProperty(unflattened, key, flattened, delimiter);
+  });
 
-    return unflattened;
+  return unflattened;
 };
 
 /**
@@ -92,23 +85,23 @@ export const unflatten = (flattened, delimiter = '.') => {
  * @private
  */
 const explodeProperty = (currUnflattened, key, flattenedObj, delimiter) => {
-    const keys = key.split(delimiter);
-    const value = flattenedObj[key];
-    const lastKeyIndex = keys.length - 1;
+  const keys = key.split(delimiter);
+  const value = flattenedObj[key];
+  const lastKeyIndex = keys.length - 1;
 
-    for (let idx = 0; idx < lastKeyIndex; idx++) {
-        const currKey = keys[idx];
-        let nextKeyVal;
+  for (let idx = 0; idx < lastKeyIndex; idx++) {
+    const currKey = keys[idx];
+    let nextKeyVal;
 
-        if (!(currKey in currUnflattened)) {
-            nextKeyVal = parseInt(keys[idx + 1], 10);
-            currUnflattened[currKey] = isNaN(nextKeyVal) ? {} : [];
-        }
-
-        currUnflattened = currUnflattened[currKey];
+    if (!currUnflattened.hasOwnProperty(currKey)) {
+      nextKeyVal = parseInt(keys[idx + 1], 10);
+      currUnflattened[currKey] = isNaN(nextKeyVal) ? {} : [];
     }
 
-    currUnflattened[keys[lastKeyIndex]] = value;
+    currUnflattened = currUnflattened[currKey];
+  }
+
+  currUnflattened[keys[lastKeyIndex]] = value;
 };
 
-export default {flatten, unflatten}
+export default { flatten, unflatten };
