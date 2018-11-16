@@ -16,7 +16,7 @@
  * @public
  */
 export const flatten = (unflattened, delimiter = '.') => {
-  if (typeof unflattened === 'undefined' || unflattened === null) return {};
+  if (unflattened === undefined || unflattened === null) return unflattened;
 
   if (typeof unflattened !== 'object') {
     throw new TypeError('unflattened is not an object');
@@ -55,7 +55,7 @@ export const flatten = (unflattened, delimiter = '.') => {
  * @public
  */
 export const unflatten = (flattened, delimiter = '.') => {
-  if (typeof flattened === 'undefined') return {};
+  if ( flattened === undefined || flattened == null) return flattened;
 
   if (typeof flattened !== 'object') {
     throw new TypeError('flattened is not an object');
