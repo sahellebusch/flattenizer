@@ -23,6 +23,12 @@
     "typescript": "^3.1.6"
   },
   "homepage": "https://github.com/sahellebusch/flattenizer#readme",
+  "husky": {
+    "hooks": {
+      "pre-commit": "lint-staged",
+      "pre-push": "npm test"
+    }
+  },
   "license": "MIT",
   "lint-staged": {
     "**/*.ts": [
@@ -36,19 +42,13 @@
     "url": "git+https://github.com/sahellebusch/flattenizer.git"
   },
   "scripts": {
-    "lint": "tslint src/flattenizer.ts spec/flattenizer.spec.ts",
-    "lint:fix": "tslint src/flattenizer.ts spec/flattenizer.spec.ts --fix",
     "build": "tsc",
     "docs:build": "typedoc --out api",
-    "test": "ts-mocha -p tsconfig.json spec/**/*.spec.ts",
-    "prepublish": "npm run build",
+    "docs:publish": "npm run docs:build && gh-pages -a -d api -m \"Update: Docs\"",
+    "lint": "tslint src/flattenizer.ts spec/flattenizer.spec.ts",
+    "lint:fix": "tslint src/flattenizer.ts spec/flattenizer.spec.ts --fix",
     "postpublish": "npm run docs:deploy",
-    "docs:deploy": "npm run docs:build && gh-pages -d api -m \"Update: Docs\""
-  },
-  "husky": {
-    "hooks": {
-      "pre-commit": "lint-staged",
-      "pre-push": "npm test"
-    }
+    "prepublish": "npm run build",
+    "test": "ts-mocha -p tsconfig.json spec/**/*.spec.ts"
   }
 }
