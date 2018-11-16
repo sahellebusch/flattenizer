@@ -1,8 +1,8 @@
 /**
-* Module to flatten and unflatten objects.
-*
-* @module Flattenizer
-*/
+ * Module to flatten and unflatten objects.
+ *
+ * @module Flattenizer
+ */
 
 /**
  * Flattens an object
@@ -16,7 +16,7 @@
  * @public
  */
 export const flatten = (unflattened: object, delimiter: string | null | undefined = '.'): object => {
-  if (unflattened === undefined || unflattened === null) return unflattened;
+  if (unflattened === undefined || unflattened === null) { return unflattened; }
 
   if (typeof unflattened !== 'object') {
     throw new TypeError('unflattened is not an object');
@@ -26,12 +26,12 @@ export const flatten = (unflattened: object, delimiter: string | null | undefine
     throw new TypeError('delimiter must be a string');
   }
 
-  let flattened = {};
+  const flattened = {};
 
   Object.entries(unflattened).forEach(([key, value]) => {
     if (typeof value === 'object' && value !== null) {
-      let flatObject = flatten(value, delimiter);
-      for (let subKey in flatObject) {
+      const flatObject = flatten(value, delimiter);
+      for (const subKey in flatObject) {
         // append to create new key value and assign it's value
         flattened[`${key}${delimiter}${subKey}`] = flatObject[subKey];
       }
@@ -55,7 +55,7 @@ export const flatten = (unflattened: object, delimiter: string | null | undefine
  * @public
  */
 export const unflatten = (flattened: object, delimiter: string | null | undefined = '.'): object => {
-  if (flattened === undefined || flattened == null) return flattened;
+  if (flattened === undefined || flattened == null) { return flattened; }
 
   if (typeof flattened !== 'object') {
     throw new TypeError('flattened is not an object');
@@ -65,7 +65,7 @@ export const unflatten = (flattened: object, delimiter: string | null | undefine
     throw new TypeError('delimiter must be a string');
   }
 
-  let unflattened = {};
+  const unflattened = {};
 
   Object.keys(flattened).forEach(key => {
     explodeProperty(unflattened, key, flattened, delimiter);

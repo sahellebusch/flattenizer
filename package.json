@@ -13,22 +13,34 @@
     "@types/chai": "^4.1.7",
     "@types/mocha": "^5.2.5",
     "chai": "^4.2.0",
+    "husky": "^1.1.4",
+    "lint-staged": "^8.0.4",
     "mocha": "^5.2.0",
     "ts-mocha": "^2.0.0",
     "ts-node": "^7.0.1",
     "tslint": "^5.11.0",
+    "tslint-config-prettier": "^1.16.0",
     "typescript": "^3.1.6"
   },
   "homepage": "https://github.com/sahellebusch/flattenizer#readme",
   "license": "MIT",
+  "lint-staged": {
+    "**/*.ts": [
+      "tslint --fix",
+      "git add"
+    ]
+  },
   "main": "./lib/flattenizer.min.js",
   "repository": {
     "type": "git",
     "url": "git+https://github.com/sahellebusch/flattenizer.git"
   },
   "scripts": {
+    "lint": "tslint src/flattenizer.ts",
+    "lint:fix": "tslint src/flattenizer.ts --fix",
     "build": "tsc",
     "build:docs": "typedoc --out doc",
+    "precommit": "lint-staged && npm run test",
     "test": "ts-mocha -p tsconfig.json spec/**/*.spec.ts"
   }
 }
