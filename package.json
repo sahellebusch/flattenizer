@@ -36,8 +36,8 @@
     "url": "git+https://github.com/sahellebusch/flattenizer.git"
   },
   "scripts": {
-    "lint": "tslint src/flattenizer.ts",
-    "lint:fix": "tslint src/flattenizer.ts --fix",
+    "lint": "tslint src/flattenizer.ts spec/flattenizer.spec.ts",
+    "lint:fix": "tslint src/flattenizer.ts spec/flattenizer.spec.ts --fix",
     "build": "tsc",
     "docs:build": "typedoc --out api",
     "test": "ts-mocha -p tsconfig.json spec/**/*.spec.ts",
