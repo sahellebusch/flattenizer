@@ -1,8 +1,6 @@
 import { expect } from 'chai';
 import { flatten, unflatten } from '../src/flattenizer';
 
-console.log(expect)
-
 describe('Flattenizer!', () => {
   describe('.flatten', () => {
 
@@ -68,7 +66,7 @@ describe('Flattenizer!', () => {
     });
 
     it('can flatten an object with a single property', () => {
-      let unflattened = {
+      const unflattened = {
         prop: 'value'
       };
 
@@ -76,7 +74,7 @@ describe('Flattenizer!', () => {
     });
 
     it('can flatten an object with multiple properties', () => {
-      let unflattened = {
+      const unflattened = {
         prop1: 'value',
         prop2: 'value2'
       };
@@ -85,7 +83,7 @@ describe('Flattenizer!', () => {
     });
 
     it('can flatten nested objects', () => {
-      let unflattened = {
+      const unflattened = {
         prop1: {
           subProp1: 'value'
         },
@@ -96,7 +94,7 @@ describe('Flattenizer!', () => {
         }
       };
 
-      let expected = {
+      const expected = {
         'prop1.subProp1': 'value',
         'prop2.subProp2.subSubProp1': 12
       };
@@ -105,7 +103,7 @@ describe('Flattenizer!', () => {
     });
 
     it('can flatten with a custom delimiter', () => {
-      let unflattened = {
+      const unflattened = {
         prop1: {
           subProp1: 'value'
         },
@@ -116,7 +114,7 @@ describe('Flattenizer!', () => {
         }
       };
 
-      let expected = {
+      const expected = {
         'prop1|subProp1': 'value',
         'prop2|subProp2|subSubProp1': 12
       };
@@ -125,7 +123,7 @@ describe('Flattenizer!', () => {
     });
 
     it('can flatten with a complicated custom delimiter', () => {
-      let unflattened = {
+      const unflattened = {
         prop1: {
           subProp1: 'value'
         },
@@ -136,7 +134,7 @@ describe('Flattenizer!', () => {
         }
       };
 
-      let expected = {
+      const expected = {
         'prop1%delim%subProp1': 'value',
         'prop2%delim%subProp2%delim%subSubProp1': 12
       };
@@ -145,14 +143,14 @@ describe('Flattenizer!', () => {
     });
 
     it('can flatten arrays', () => {
-      let unflattened = {
+      const unflattened = {
         prop: 'not array',
         arrayProp: [
           'value1', 12
         ]
       };
 
-      let expected = {
+      const expected = {
         'prop': 'not array',
         'arrayProp.0': 'value1',
         'arrayProp.1': 12
@@ -162,7 +160,7 @@ describe('Flattenizer!', () => {
     });
 
     it('can flatten objects composed of nested objects and arrays', () => {
-      let unflattened = {
+      const unflattened = {
         'index': 0,
         'name': 'Willis Pena',
         'company': 'ROCKYARD',
@@ -183,7 +181,7 @@ describe('Flattenizer!', () => {
         ]
       };
 
-      let expected = {
+      const expected = {
         'index': 0,
         'name': 'Willis Pena',
         'company': 'ROCKYARD',
@@ -207,7 +205,7 @@ describe('Flattenizer!', () => {
     });
 
     it('will retain undefined values as undefined', () => {
-      let unflattened = {
+      const unflattened = {
         prop1: undefined,
         prop2: {
           subProp2: {
@@ -216,7 +214,7 @@ describe('Flattenizer!', () => {
         }
       };
 
-      let expected = {
+      const expected = {
         'prop1': undefined,
         'prop2.subProp2.subSubProp1': 12
       };
@@ -242,7 +240,7 @@ describe('Flattenizer!', () => {
 
     it('will throw an error if a value passed in is not undef, but also not an object[function]', () => {
       expect(() => {
-        unflatten(() => { return 'why would you do this...' })
+        unflatten(() => 'why would you do this...')
       }).to.throw('flattened is not an object');
     });
 
@@ -292,7 +290,7 @@ describe('Flattenizer!', () => {
     });
 
     it('can unflatten an object with a single property', () => {
-      let unflattened = {
+      const unflattened = {
         prop: 'value'
       };
 
@@ -300,7 +298,7 @@ describe('Flattenizer!', () => {
     });
 
     it('can unflatten an object with multiple properties', () => {
-      let unflattened = {
+      const unflattened = {
         prop1: 'value',
         prop2: 'value2'
       };
@@ -309,12 +307,12 @@ describe('Flattenizer!', () => {
     });
 
     it('can unflatten nested objects', () => {
-      let flattened = {
+      const flattened = {
         'prop1.subProp1': 'value',
         'prop2.subProp2.subSubProp1': 12
       };
 
-      let expected = {
+      const expected = {
         prop1: {
           subProp1: 'value'
         },
@@ -329,12 +327,12 @@ describe('Flattenizer!', () => {
     });
 
     it('can unflatten objects with a custom delimiter', () => {
-      let flattened = {
+      const flattened = {
         'prop1|subProp1': 'value',
         'prop2|subProp2|subSubProp1': 12
       };
 
-      let expected = {
+      const expected = {
         prop1: {
           subProp1: 'value'
         },
@@ -349,12 +347,12 @@ describe('Flattenizer!', () => {
     });
 
     it('can unflatten objects with a complicated delimiter', () => {
-      let flattened = {
+      const flattened = {
         'prop1%delim%subProp1': 'value',
         'prop2%delim%subProp2%delim%subSubProp1': 12
       };
 
-      let expected = {
+      const expected = {
         prop1: {
           subProp1: 'value'
         },
@@ -369,13 +367,13 @@ describe('Flattenizer!', () => {
     });
 
     it('can unflatten arrays', () => {
-      let flattened = {
+      const flattened = {
         'prop': 'not array',
         'arrayProp.0': 'value1',
         'arrayProp.1': 12
       };
 
-      let expected = {
+      const expected = {
         prop: 'not array',
         arrayProp: [
           'value1', 12
@@ -386,7 +384,7 @@ describe('Flattenizer!', () => {
     });
 
     it('can unflatten objects composed of nested objects and arrays', () => {
-      let flattened = {
+      const flattened = {
         'index': 0,
         'name': 'Willis Pena',
         'company': 'ROCKYARD',
@@ -406,7 +404,7 @@ describe('Flattenizer!', () => {
         'friends.2.name': 'Lynnette Gilmore'
       };
 
-      let expected = {
+      const expected = {
         'index': 0,
         'name': 'Willis Pena',
         'company': 'ROCKYARD',
@@ -431,12 +429,12 @@ describe('Flattenizer!', () => {
     });
 
     it('will retain undefined values as undefined', () => {
-      let flattened = {
+      const flattened = {
         'prop1': undefined,
         'prop2.subProp2.subSubProp1': 12
       };
 
-      let expected = {
+      const expected = {
         prop1: undefined,
         prop2: {
           subProp2: {
