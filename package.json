@@ -13,6 +13,7 @@
     "@types/chai": "^4.1.7",
     "@types/mocha": "^5.2.5",
     "chai": "^4.2.0",
+    "gh-pages": "^2.0.1",
     "husky": "^1.1.4",
     "lint-staged": "^8.0.4",
     "mocha": "^5.2.0",
@@ -39,8 +40,11 @@
     "lint": "tslint src/flattenizer.ts",
     "lint:fix": "tslint src/flattenizer.ts --fix",
     "build": "tsc",
-    "build:docs": "typedoc --out doc",
-    "test": "ts-mocha -p tsconfig.json spec/**/*.spec.ts"
+    "docs:build": "typedoc --out api",
+    "test": "ts-mocha -p tsconfig.json spec/**/*.spec.ts",
+    "prepublish": "npm run build",
+    "postpublish": "npm run docs:deploy",
+    "docs:deploy": "npm run docs:build && gh-pages -d api -m \"Update: Docs\""
   },
   "husky": {
     "hooks": {

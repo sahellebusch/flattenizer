@@ -15,7 +15,7 @@
  * @throws {TypeError}             - if object passed in is not an object or if the delimiter is not a string
  * @public
  */
-export const flatten = (unflattened: object, delimiter: string | null | undefined = '.'): object => {
+export const flatten = (unflattened: object, delimiter: string = '.'): object => {
   if (unflattened === undefined || unflattened === null) { return unflattened; }
 
   if (typeof unflattened !== 'object') {
@@ -54,7 +54,7 @@ export const flatten = (unflattened: object, delimiter: string | null | undefine
  * @throws {TypeError}             - if object passed in is not an object or if the delimiter is not a string
  * @public
  */
-export const unflatten = (flattened: object, delimiter: string | null | undefined = '.'): object => {
+export const unflatten = (flattened: object, delimiter: string = '.'): object => {
   if (flattened === undefined || flattened == null) { return flattened; }
 
   if (typeof flattened !== 'object') {
