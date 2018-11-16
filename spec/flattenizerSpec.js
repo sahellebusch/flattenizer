@@ -48,13 +48,17 @@ describe('Flattenizer!', () => {
         });
 
         it('will throw an error if the delimiter passed in is not a string[function]', () => {
-            expect(() => {
+          expect(() => {
                 flatten({}, () => 'why would you ever do this...');
             }).toThrow(new TypeError('delimiter must be a string'));
         });
 
-        it('will return an empty object if undefined is passed in', () => {
-            expect(flatten(undefined)).toEqual({})
+        it('will return undefined if undefined is passed in', () => {
+          expect(flatten(undefined)).toEqual(undefined);
+        });
+
+        it('will return null if null is passed in', () => {
+          expect(flatten(null)).toEqual(null)
         });
 
         it('can flatten an empty object', () => {
@@ -273,12 +277,12 @@ describe('Flattenizer!', () => {
             }).toThrow(new TypeError('delimiter must be a string'));
         });
 
-        it('will return an empty object if undefined is passed in', () => {
-            expect(unflatten(undefined)).toEqual({})
+        it('will return undefined if undefined is passed in', () => {
+            expect(unflatten(undefined)).toEqual(undefined)
         });
 
-        it('will return an empty object if undefined is passed in', () => {
-            expect(unflatten(undefined)).toEqual({})
+        it('will return null if null is passed in', () => {
+            expect(unflatten(null)).toEqual(null)
         });
 
         it('can unflatten an empty object', () => {
