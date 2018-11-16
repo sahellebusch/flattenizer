@@ -40,7 +40,11 @@
     "lint:fix": "tslint src/flattenizer.ts --fix",
     "build": "tsc",
     "build:docs": "typedoc --out doc",
-    "precommit": "lint-staged && npm run test",
     "test": "ts-mocha -p tsconfig.json spec/**/*.spec.ts"
+  },
+  "husky": {
+    "hooks": {
+      "pre-commit": "lint-staged && npm run test"
+    }
   }
 }
