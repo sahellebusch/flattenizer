@@ -1,8 +1,8 @@
 /**
- * Module to flatten and unflatten objects.
- *
- * @module Flattenizer
- */
+* Module to flatten and unflatten objects.
+*
+* @module Flattenizer
+*/
 
 /**
  * Flattens an object
@@ -15,7 +15,7 @@
  * @throws {TypeError}             - if object passed in is not an object or if the delimiter is not a string
  * @public
  */
-export const flatten = (unflattened, delimiter = '.') => {
+export const flatten = (unflattened: object, delimiter: string | null | undefined = '.'): object => {
   if (unflattened === undefined || unflattened === null) return unflattened;
 
   if (typeof unflattened !== 'object') {
@@ -54,8 +54,8 @@ export const flatten = (unflattened, delimiter = '.') => {
  * @throws {TypeError}             - if object passed in is not an object or if the delimiter is not a string
  * @public
  */
-export const unflatten = (flattened, delimiter = '.') => {
-  if ( flattened === undefined || flattened == null) return flattened;
+export const unflatten = (flattened: object, delimiter: string | null | undefined = '.'): object => {
+  if (flattened === undefined || flattened == null) return flattened;
 
   if (typeof flattened !== 'object') {
     throw new TypeError('flattened is not an object');
@@ -84,7 +84,7 @@ export const unflatten = (flattened, delimiter = '.') => {
  * @param {String} delimiter       - the delimiter to be used when unflattening the object
  * @private
  */
-const explodeProperty = (currUnflattened, key, flattenedObj, delimiter) => {
+const explodeProperty = (currUnflattened: object, key: string, flattenedObj: object, delimiter: string): void => {
   const keys = key.split(delimiter);
   const value = flattenedObj[key];
   const lastKeyIndex = keys.length - 1;
