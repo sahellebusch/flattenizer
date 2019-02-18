@@ -4,6 +4,18 @@
  * @module Flattenizer
  */
 
+export type Nullable<A> = A | null | undefined;
+export type Delimiter = string;
+
+export interface IFlattened<P> {
+  [path: string]: P;
+}
+
+export interface IUnflattened<P> {
+  [key: string]: P | P[] | IUnflattened<P>;
+}
+
+
 /**
  * Flattens an object
  *
@@ -15,8 +27,15 @@
  * @throws {TypeError}             - if object passed in is not an object or if the delimiter is not a string
  * @public
  */
-export const flatten = (unflattened, delimiter = '.') => {
-  if (unflattened === undefined || unflattened === null) return unflattened;
+export const flatten = <A extends IFlattened<any>, B extends IUnflattened<any>>(unflattened: Nullable<B>, delimiter: Delimiter = '.'): Nullable<A> => {
+
+  if (unflattened === undefined) {
+    return undefined
+  };
+
+  if (unflattened === null) {
+    return null;
+  }
 
   if (typeof unflattened !== 'object') {
     throw new TypeError('unflattened is not an object');
@@ -26,19 +45,22 @@ export const flatten = (unflattened, delimiter = '.') => {
     throw new TypeError('delimiter must be a string');
   }
 
-  let flattened = {};
-
-  Object.entries(unflattened).forEach(([key, value]) => {
+  const flattened: A = Object.keys(unflattened).reduce((acc, key) => {
+    const value = unflattened[key]
     if (typeof value === 'object' && value !== null) {
-      let flatObject = flatten(value, delimiter);
-      for (let subKey in flatObject) {
+      const flatObject = flatten(value, delimiter);
+
+      for (const subKey in flatObject) {
         // append to create new key value and assign it's value
-        flattened[`${key}${delimiter}${subKey}`] = flatObject[subKey];
+        acc[`${key}${delimiter}${subKey}`] = flatObject[subKey];
       }
+
     } else {
-      flattened[key] = value;
+      acc[key] = value;
     }
-  });
+
+    return acc;
+  }, {} as A);
 
   return flattened;
 };
@@ -54,9 +76,14 @@ export const flatten = (unflattened, delimiter = '.') => {
  * @throws {TypeError}             - if object passed in is not an object or if the delimiter is not a string
  * @public
  */
-export const unflatten = (flattened, delimiter = '.') => {
-  if ( flattened === undefined || flattened == null) return flattened;
+export const unflatten = <A extends IFlattened<any>, B extends IUnflattened<any>>(flattened: Nullable<A>, delimiter: Delimiter = '.'): Nullable<B> => {
+  if (flattened === undefined) {
+    return undefined
+  };
 
+  if (flattened === null) {
+    return null;
+  }
   if (typeof flattened !== 'object') {
     throw new TypeError('flattened is not an object');
   }
@@ -65,11 +92,10 @@ export const unflatten = (flattened, delimiter = '.') => {
     throw new TypeError('delimiter must be a string');
   }
 
-  let unflattened = {};
-
-  Object.keys(flattened).forEach(key => {
-    explodeProperty(unflattened, key, flattened, delimiter);
-  });
+  const unflattened: B = Object.keys(flattened).reduce((acc, key) => {
+    explodeProperty(acc, key, flattened, delimiter);
+    return acc;
+  }, {} as B)
 
   return unflattened;
 };
@@ -84,7 +110,7 @@ export const unflatten = (flattened, delimiter = '.') => {
  * @param {String} delimiter       - the delimiter to be used when unflattening the object
  * @private
  */
-const explodeProperty = (currUnflattened, key, flattenedObj, delimiter) => {
+const explodeProperty = (currUnflattened: object, key: string, flattenedObj: object, delimiter: string): void => {
   const keys = key.split(delimiter);
   const value = flattenedObj[key];
   const lastKeyIndex = keys.length - 1;

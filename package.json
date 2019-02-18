@@ -1,37 +1,54 @@
 {
   "name": "flattenizer",
-  "version": "1.0.5",
   "description": "Small library for flattening and unflattening objects.",
-  "main": "./lib/flattenizer.min.js",
-  "scripts": {
-    "build": "webpack",
-    "build:min": "webpack --env build",
-    "test": "karma start karma.conf.js --browsers ChromeTravis",
-    "generate-docs": "node_modules/.bin/jsdoc --configure .jsdoc.json --verbose"
+  "version": "2.0.0",
+  "author": "Sean Hellebusch <sahellebusch@gmail.com>",
+  "bugs": {
+    "url": "https://github.com/sahellebusch/flattenizer/issues"
   },
+  "dependencies": {},
+  "devDependencies": {
+    "@types/chai": "^4.1.7",
+    "@types/mocha": "^5.2.5",
+    "chai": "^4.2.0",
+    "gh-pages": "^2.0.1",
+    "husky": "^1.1.4",
+    "lint-staged": "^8.0.4",
+    "mocha": "^5.2.0",
+    "ts-mocha": "^2.0.0",
+    "ts-node": "^7.0.1",
+    "tslint": "^5.11.0",
+    "tslint-config-prettier": "^1.16.0",
+    "typedoc": "^0.13.0",
+    "typescript": "^3.1.6"
+  },
+  "homepage": "https://github.com/sahellebusch/flattenizer#readme",
+  "husky": {
+    "hooks": {
+      "pre-commit": "lint-staged",
+      "pre-push": "npm test"
+    }
+  },
+  "license": "MIT",
+  "lint-staged": {
+    "**/*.ts": [
+      "tslint --fix",
+      "git add"
+    ]
+  },
+  "main": "./dist/flattenizer.min.js",
   "repository": {
     "type": "git",
     "url": "git+https://github.com/sahellebusch/flattenizer.git"
   },
-  "author": "Sean Hellebusch <sahellebusch@gmail.com>",
-  "license": "MIT",
-  "bugs": {
-    "url": "https://github.com/sahellebusch/flattenizer/issues"
-  },
-  "homepage": "https://github.com/sahellebusch/flattenizer#readme",
-  "devDependencies": {
-    "babel-cli": "^6.24.0",
-    "babel-core": "^6.24.0",
-    "babel-loader": "^7.1.2",
-    "babel-preset-es2015": "^6.24.0",
-    "jasmine": "^2.5.3",
-    "jasmine-core": "^2.5.2",
-    "jasmine-node": "^1.14.5",
-    "jsdoc": "^3.4.3",
-    "karma": "^1.5.0",
-    "karma-chrome-launcher": "^2.0.0",
-    "karma-jasmine": "^1.1.0",
-    "karma-webpack": "^2.0.3",
-    "webpack": "^3.6.0"
+  "scripts": {
+    "build": "tsc",
+    "docs:build": "typedoc --out api",
+    "docs:publish": "npm run docs:build && gh-pages -a -d api -m \"Update: Docs\"",
+    "lint": "tslint src/flattenizer.ts spec/flattenizer.spec.ts",
+    "lint:fix": "tslint src/flattenizer.ts spec/flattenizer.spec.ts --fix",
+    "postpublish": "npm run docs:deploy",
+    "prepublish": "npm run build",
+    "test": "ts-mocha -p tsconfig.json spec/**/*.spec.ts"
   }
 }
