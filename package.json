@@ -1,7 +1,7 @@
 {
   "name": "flattenizer",
   "description": "Small library for flattening and unflattening objects.",
-  "version": "2.0.1",
+  "version": "2.0.2",
   "author": "Sean Hellebusch <sahellebusch@gmail.com>",
   "bugs": {
     "url": "https://github.com/sahellebusch/flattenizer/issues"
@@ -9,14 +9,20 @@
   "devDependencies": {
     "@types/jest": "^24.0.23",
     "@types/node": "^12.12.8",
+    "@typescript-eslint/eslint-plugin": "^2.7.0",
+    "@typescript-eslint/parser": "^2.7.0",
+    "eslint": "6.5.1",
+    "eslint-config-prettier": "6.4.0",
+    "eslint-plugin-cypress": "2.7.0",
+    "eslint-plugin-node": "10.0.0",
+    "eslint-plugin-prettier": "3.1.1",
     "gh-pages": "^2.1.1",
     "husky": "^1.3.1",
     "jest": "^24.9.0",
     "lint-staged": "^8.2.1",
+    "prettier": "^1.19.1",
     "ts-jest": "^24.1.0",
     "ts-node": "^8.5.2",
-    "tslint": "^5.20.1",
-    "tslint-config-prettier": "^1.18.0",
     "typedoc": "^0.15.2",
     "typescript": "^3.7.2"
   },
@@ -30,7 +36,7 @@
   "license": "MIT",
   "lint-staged": {
     "**/*.ts": [
-      "tslint --fix",
+      "eslint --fix",
       "git add"
     ]
   },
@@ -41,12 +47,12 @@
   },
   "scripts": {
     "build": "tsc",
-    "docs:build": "npx typedoc --out api",
-    "docs:publish": "npm run docs:build && npx gh-pages -a -d api -m \"Update: Docs\"",
-    "lint": "tslint src/flattenizer.ts spec/flattenizer.spec.ts",
-    "lint:fix": "tslint src/flattenizer.ts spec/flattenizer.spec.ts --fix",
+    "docs:build": "typedoc --out api",
+    "docs:publish": "npm run docs:build && gh-pages -a -d api -m \"Update: Docs\"",
+    "lint": "eslint src/flattenizer.ts src/test/flattenizer.ts",
+    "lint:fix": "npm run lint -- --fix",
     "postpublish": "npm run docs:deploy",
-    "prepublish": "npm run build",
+    "prepare": "npm run build",
     "test": "jest"
   }
 }

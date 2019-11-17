@@ -1,4 +1,4 @@
-import { flatten, unflatten } from '../flattenizer';
+import {flatten, unflatten} from '../flattenizer';
 
 describe('Flattenizer!', () => {
   describe('.flatten', () => {
@@ -7,7 +7,7 @@ describe('Flattenizer!', () => {
     });
 
     test('will return null if null is passed in', () => {
-      expect(flatten(null)).toEqual(null)
+      expect(flatten(null)).toEqual(null);
     });
 
     test('can flatten an empty object', () => {
@@ -94,13 +94,11 @@ describe('Flattenizer!', () => {
     test('can flatten arrays', () => {
       const unflattened = {
         prop: 'not array',
-        arrayProp: [
-          'value1', 12
-        ]
+        arrayProp: ['value1', 12]
       };
 
       const expected = {
-        'prop': 'not array',
+        prop: 'not array',
         'arrayProp.0': 'value1',
         'arrayProp.1': 12
       };
@@ -110,31 +108,23 @@ describe('Flattenizer!', () => {
 
     test('can flatten objects composed of nested objects and arrays', () => {
       const unflattened = {
-        'index': 0,
-        'name': 'Willis Pena',
-        'company': 'ROCKYARD',
-        'email': 'willispena@rockyard.com',
-        'tags': [
-          'laboris',
-          'irure',
-          'exercitation',
-          'et',
-          'dolore',
-          'et',
-          'id'
-        ],
-        'friends': [
-          { 'id': 0, 'name': 'Gentry Martin' },
-          { 'id': 1, 'name': 'Owen Willis' },
-          { 'id': 2, 'name': 'Lynnette Gilmore' }
+        index: 0,
+        name: 'Willis Pena',
+        company: 'ROCKYARD',
+        email: 'willispena@rockyard.com',
+        tags: ['laboris', 'irure', 'exercitation', 'et', 'dolore', 'et', 'id'],
+        friends: [
+          {id: 0, name: 'Gentry Martin'},
+          {id: 1, name: 'Owen Willis'},
+          {id: 2, name: 'Lynnette Gilmore'}
         ]
       };
 
       const expected = {
-        'index': 0,
-        'name': 'Willis Pena',
-        'company': 'ROCKYARD',
-        'email': 'willispena@rockyard.com',
+        index: 0,
+        name: 'Willis Pena',
+        company: 'ROCKYARD',
+        email: 'willispena@rockyard.com',
         'tags.0': 'laboris',
         'tags.1': 'irure',
         'tags.2': 'exercitation',
@@ -164,22 +154,21 @@ describe('Flattenizer!', () => {
       };
 
       const expected = {
-        'prop1': undefined,
+        prop1: undefined,
         'prop2.subProp2.subSubProp1': 12
       };
 
       expect(flatten(unflattened)).toEqual(expected);
     });
-
   });
 
   describe('.unflatten', () => {
     test('will return undefined if undefined is passed in', () => {
-      expect(unflatten(undefined)).toEqual(undefined)
+      expect(unflatten(undefined)).toEqual(undefined);
     });
 
     test('will return null if null is passed in', () => {
-      expect(unflatten(null)).toEqual(null)
+      expect(unflatten(null)).toEqual(null);
     });
 
     test('can unflatten an empty object', () => {
@@ -265,16 +254,14 @@ describe('Flattenizer!', () => {
 
     test('can unflatten arrays', () => {
       const flattened = {
-        'prop': 'not array',
+        prop: 'not array',
         'arrayProp.0': 'value1',
         'arrayProp.1': 12
       };
 
       const expected = {
         prop: 'not array',
-        arrayProp: [
-          'value1', 12
-        ]
+        arrayProp: ['value1', 12]
       };
 
       expect(unflatten(flattened)).toEqual(expected);
@@ -282,10 +269,10 @@ describe('Flattenizer!', () => {
 
     test('can unflatten objects composed of nested objects and arrays', () => {
       const flattened = {
-        'index': 0,
-        'name': 'Willis Pena',
-        'company': 'ROCKYARD',
-        'email': 'willispena@rockyard.com',
+        index: 0,
+        name: 'Willis Pena',
+        company: 'ROCKYARD',
+        email: 'willispena@rockyard.com',
         'tags.0': 'laboris',
         'tags.1': 'irure',
         'tags.2': 'exercitation',
@@ -302,23 +289,15 @@ describe('Flattenizer!', () => {
       };
 
       const expected = {
-        'index': 0,
-        'name': 'Willis Pena',
-        'company': 'ROCKYARD',
-        'email': 'willispena@rockyard.com',
-        'tags': [
-          'laboris',
-          'irure',
-          'exercitation',
-          'et',
-          'dolore',
-          'et',
-          'id'
-        ],
-        'friends': [
-          { 'id': 0, 'name': 'Gentry Martin' },
-          { 'id': 1, 'name': 'Owen Willis' },
-          { 'id': 2, 'name': 'Lynnette Gilmore' }
+        index: 0,
+        name: 'Willis Pena',
+        company: 'ROCKYARD',
+        email: 'willispena@rockyard.com',
+        tags: ['laboris', 'irure', 'exercitation', 'et', 'dolore', 'et', 'id'],
+        friends: [
+          {id: 0, name: 'Gentry Martin'},
+          {id: 1, name: 'Owen Willis'},
+          {id: 2, name: 'Lynnette Gilmore'}
         ]
       };
 
@@ -327,7 +306,7 @@ describe('Flattenizer!', () => {
 
     test('will retain undefined values as undefined', () => {
       const flattened = {
-        'prop1': undefined,
+        prop1: undefined,
         'prop2.subProp2.subSubProp1': 12
       };
 
