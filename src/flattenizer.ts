@@ -60,7 +60,7 @@ export const flatten = <A extends IFlattened<any>, B extends IUnflattened<any>>(
     }
 
     return acc;
-  }, {} as A);
+  }, {}) as A;
 
   return flattened;
 };
