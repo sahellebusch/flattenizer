@@ -16,7 +16,7 @@ describe('Flattenizer!', () => {
 
     test('can flatten an object with a single property', () => {
       const unflattened = {
-        prop: 'value'
+        prop: 'value',
       };
 
       expect(flatten(unflattened)).toEqual(unflattened);
@@ -25,7 +25,7 @@ describe('Flattenizer!', () => {
     test('can flatten an object with multiple properties', () => {
       const unflattened = {
         prop1: 'value',
-        prop2: 'value2'
+        prop2: 'value2',
       };
 
       expect(flatten(unflattened)).toEqual(unflattened);
@@ -34,18 +34,18 @@ describe('Flattenizer!', () => {
     test('can flatten nested objects', () => {
       const unflattened = {
         prop1: {
-          subProp1: 'value'
+          subProp1: 'value',
         },
         prop2: {
           subProp2: {
-            subSubProp1: 12
-          }
-        }
+            subSubProp1: 12,
+          },
+        },
       };
 
       const expected = {
         'prop1.subProp1': 'value',
-        'prop2.subProp2.subSubProp1': 12
+        'prop2.subProp2.subSubProp1': 12,
       };
 
       expect(flatten(unflattened)).toEqual(expected);
@@ -54,18 +54,18 @@ describe('Flattenizer!', () => {
     test('can flatten with a custom delimiter', () => {
       const unflattened = {
         prop1: {
-          subProp1: 'value'
+          subProp1: 'value',
         },
         prop2: {
           subProp2: {
-            subSubProp1: 12
-          }
-        }
+            subSubProp1: 12,
+          },
+        },
       };
 
       const expected = {
         'prop1|subProp1': 'value',
-        'prop2|subProp2|subSubProp1': 12
+        'prop2|subProp2|subSubProp1': 12,
       };
 
       expect(flatten(unflattened, '|')).toEqual(expected);
@@ -74,18 +74,18 @@ describe('Flattenizer!', () => {
     test('can flatten with a complicated custom delimiter', () => {
       const unflattened = {
         prop1: {
-          subProp1: 'value'
+          subProp1: 'value',
         },
         prop2: {
           subProp2: {
-            subSubProp1: 12
-          }
-        }
+            subSubProp1: 12,
+          },
+        },
       };
 
       const expected = {
         'prop1%delim%subProp1': 'value',
-        'prop2%delim%subProp2%delim%subSubProp1': 12
+        'prop2%delim%subProp2%delim%subSubProp1': 12,
       };
 
       expect(flatten(unflattened, '%delim%')).toEqual(expected);
@@ -94,13 +94,13 @@ describe('Flattenizer!', () => {
     test('can flatten arrays', () => {
       const unflattened = {
         prop: 'not array',
-        arrayProp: ['value1', 12]
+        arrayProp: ['value1', 12],
       };
 
       const expected = {
         prop: 'not array',
         'arrayProp.0': 'value1',
-        'arrayProp.1': 12
+        'arrayProp.1': 12,
       };
 
       expect(flatten(unflattened)).toEqual(expected);
@@ -116,8 +116,8 @@ describe('Flattenizer!', () => {
         friends: [
           {id: 0, name: 'Gentry Martin'},
           {id: 1, name: 'Owen Willis'},
-          {id: 2, name: 'Lynnette Gilmore'}
-        ]
+          {id: 2, name: 'Lynnette Gilmore'},
+        ],
       };
 
       const expected = {
@@ -137,7 +137,7 @@ describe('Flattenizer!', () => {
         'friends.1.id': 1,
         'friends.1.name': 'Owen Willis',
         'friends.2.id': 2,
-        'friends.2.name': 'Lynnette Gilmore'
+        'friends.2.name': 'Lynnette Gilmore',
       };
 
       expect(flatten(unflattened)).toEqual(expected);
@@ -148,14 +148,14 @@ describe('Flattenizer!', () => {
         prop1: undefined,
         prop2: {
           subProp2: {
-            subSubProp1: 12
-          }
-        }
+            subSubProp1: 12,
+          },
+        },
       };
 
       const expected = {
         prop1: undefined,
-        'prop2.subProp2.subSubProp1': 12
+        'prop2.subProp2.subSubProp1': 12,
       };
 
       expect(flatten(unflattened)).toEqual(expected);
@@ -177,7 +177,7 @@ describe('Flattenizer!', () => {
 
     test('can unflatten an object with a single property', () => {
       const unflattened = {
-        prop: 'value'
+        prop: 'value',
       };
 
       expect(unflatten(unflattened)).toEqual(unflattened);
@@ -186,7 +186,7 @@ describe('Flattenizer!', () => {
     test('can unflatten an object with multiple properties', () => {
       const unflattened = {
         prop1: 'value',
-        prop2: 'value2'
+        prop2: 'value2',
       };
 
       expect(unflatten(unflattened)).toEqual(unflattened);
@@ -195,18 +195,18 @@ describe('Flattenizer!', () => {
     test('can unflatten nested objects', () => {
       const flattened = {
         'prop1.subProp1': 'value',
-        'prop2.subProp2.subSubProp1': 12
+        'prop2.subProp2.subSubProp1': 12,
       };
 
       const expected = {
         prop1: {
-          subProp1: 'value'
+          subProp1: 'value',
         },
         prop2: {
           subProp2: {
-            subSubProp1: 12
-          }
-        }
+            subSubProp1: 12,
+          },
+        },
       };
 
       expect(unflatten(flattened)).toEqual(expected);
@@ -215,18 +215,18 @@ describe('Flattenizer!', () => {
     test('can unflatten objects with a custom delimiter', () => {
       const flattened = {
         'prop1|subProp1': 'value',
-        'prop2|subProp2|subSubProp1': 12
+        'prop2|subProp2|subSubProp1': 12,
       };
 
       const expected = {
         prop1: {
-          subProp1: 'value'
+          subProp1: 'value',
         },
         prop2: {
           subProp2: {
-            subSubProp1: 12
-          }
-        }
+            subSubProp1: 12,
+          },
+        },
       };
 
       expect(unflatten(flattened, '|')).toEqual(expected);
@@ -235,18 +235,18 @@ describe('Flattenizer!', () => {
     test('can unflatten objects with a complicated delimiter', () => {
       const flattened = {
         'prop1%delim%subProp1': 'value',
-        'prop2%delim%subProp2%delim%subSubProp1': 12
+        'prop2%delim%subProp2%delim%subSubProp1': 12,
       };
 
       const expected = {
         prop1: {
-          subProp1: 'value'
+          subProp1: 'value',
         },
         prop2: {
           subProp2: {
-            subSubProp1: 12
-          }
-        }
+            subSubProp1: 12,
+          },
+        },
       };
 
       expect(unflatten(flattened, '%delim%')).toEqual(expected);
@@ -256,12 +256,12 @@ describe('Flattenizer!', () => {
       const flattened = {
         prop: 'not array',
         'arrayProp.0': 'value1',
-        'arrayProp.1': 12
+        'arrayProp.1': 12,
       };
 
       const expected = {
         prop: 'not array',
-        arrayProp: ['value1', 12]
+        arrayProp: ['value1', 12],
       };
 
       expect(unflatten(flattened)).toEqual(expected);
@@ -285,7 +285,7 @@ describe('Flattenizer!', () => {
         'friends.1.id': 1,
         'friends.1.name': 'Owen Willis',
         'friends.2.id': 2,
-        'friends.2.name': 'Lynnette Gilmore'
+        'friends.2.name': 'Lynnette Gilmore',
       };
 
       const expected = {
@@ -297,8 +297,8 @@ describe('Flattenizer!', () => {
         friends: [
           {id: 0, name: 'Gentry Martin'},
           {id: 1, name: 'Owen Willis'},
-          {id: 2, name: 'Lynnette Gilmore'}
-        ]
+          {id: 2, name: 'Lynnette Gilmore'},
+        ],
       };
 
       expect(unflatten(flattened)).toEqual(expected);
@@ -307,16 +307,16 @@ describe('Flattenizer!', () => {
     test('will retain undefined values as undefined', () => {
       const flattened = {
         prop1: undefined,
-        'prop2.subProp2.subSubProp1': 12
+        'prop2.subProp2.subSubProp1': 12,
       };
 
       const expected = {
         prop1: undefined,
         prop2: {
           subProp2: {
-            subSubProp1: 12
-          }
-        }
+            subSubProp1: 12,
+          },
+        },
       };
 
       expect(unflatten(flattened)).toEqual(expected);

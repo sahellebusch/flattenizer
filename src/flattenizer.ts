@@ -76,9 +76,9 @@ export const flatten = <A extends IFlattened<any>, B extends IUnflattened<any>>(
  * @private
  */
 const explodeProperty = (
-  currUnflattened: object,
+  currUnflattened: Record<string, unknown>,
   key: string,
-  flattenedObj: object,
+  flattenedObj: Record<string, unknown>,
   delimiter: string
 ): void => {
   const keys = key.split(delimiter);
