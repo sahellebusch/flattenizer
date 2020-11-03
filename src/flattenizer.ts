@@ -76,9 +76,9 @@ export const flatten = <A extends IFlattened<any>, B extends IUnflattened<any>>(
  * @private
  */
 const explodeProperty = (
-  currUnflattened: Record<string, unknown>,
+  currUnflattened: Record<string, any>,
   key: string,
-  flattenedObj: Record<string, unknown>,
+  flattenedObj: Record<string, any>,
   delimiter: string
 ): void => {
   const keys = key.split(delimiter);
@@ -87,7 +87,7 @@ const explodeProperty = (
 
   for (let idx = 0; idx < lastKeyIndex; idx++) {
     const currKey = keys[idx];
-    let nextKeyVal;
+    let nextKeyVal: any;
 
     if (!currUnflattened.hasOwnProperty(currKey)) {
       nextKeyVal = parseInt(keys[idx + 1], 10);
