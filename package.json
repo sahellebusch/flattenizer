@@ -7,52 +7,65 @@
     "url": "https://github.com/sahellebusch/flattenizer/issues"
   },
   "devDependencies": {
-    "@types/jest": "^24.0.23",
-    "@types/node": "^12.12.8",
-    "@typescript-eslint/eslint-plugin": "^2.7.0",
-    "@typescript-eslint/parser": "^2.7.0",
-    "eslint": "6.5.1",
-    "eslint-config-prettier": "6.4.0",
-    "eslint-plugin-cypress": "2.7.0",
-    "eslint-plugin-node": "10.0.0",
-    "eslint-plugin-prettier": "3.1.1",
-    "gh-pages": "^2.1.1",
-    "husky": "^1.3.1",
-    "jest": "^24.9.0",
-    "lint-staged": "^8.2.1",
-    "prettier": "^1.19.1",
-    "ts-jest": "^24.1.0",
-    "ts-node": "^8.5.2",
-    "typedoc": "^0.15.2",
-    "typescript": "^3.7.2"
+    "@size-limit/preset-small-lib": "^4.9.1",
+    "husky": "^4.3.6",
+    "np": "^7.0.0",
+    "size-limit": "^4.9.1",
+    "tsdx": "^0.14.1",
+    "tslib": "^2.0.3",
+    "typescript": "^4.1.3"
   },
+  "engines": {
+    "node": ">=10"
+  },
+  "files": [
+    "dist",
+    "src"
+  ],
   "homepage": "https://github.com/sahellebusch/flattenizer#readme",
   "husky": {
     "hooks": {
-      "pre-commit": "lint-staged",
-      "pre-push": "npm test"
+      "pre-commit": "tsdx lint"
     }
   },
+  "keywords": [
+    "flatten",
+    "unflatten"
+  ],
   "license": "MIT",
-  "lint-staged": {
-    "**/*.ts": [
-      "eslint --fix",
-      "git add"
-    ]
+  "main": "dist/index.js",
+  "module": "dist/flattenizer.esm.js",
+  "peerDependencies": {},
+  "prettier": {
+    "printWidth": 80,
+    "semi": true,
+    "singleQuote": true,
+    "trailingComma": "es5"
   },
-  "main": "./dist/flattenizer.min.js",
   "repository": {
     "type": "git",
     "url": "git+https://github.com/sahellebusch/flattenizer.git"
   },
   "scripts": {
-    "build": "tsc",
-    "docs:build": "typedoc --out api",
-    "docs:publish": "npm run docs:build && gh-pages -a -d api -m \"Update: Docs\"",
-    "lint": "eslint src/flattenizer.ts src/test/flattenizer.ts",
-    "lint:fix": "npm run lint -- --fix",
-    "postpublish": "npm run docs:deploy",
-    "prepare": "npm run build",
-    "test": "jest"
-  }
+    "analyze": "size-limit --why",
+    "build": "tsdx build",
+    "lint": "tsdx lint",
+    "lint:fix": "tsdx lint --fix",
+    "prepare": "tsdx build",
+    "release": "np",
+    "size": "size-limit",
+    "start": "tsdx watch",
+    "test": "tsdx test"
+  },
+  "size-limit": [
+    {
+      "path": "dist/flattenizer.cjs.production.min.js",
+      "limit": "10 KB"
+    },
+    {
+      "path": "dist/flattenizer.esm.js",
+      "limit": "10 KB"
+    }
+  ],
+  "typings": "dist/index.d.ts"
 }

@@ -1,20 +1,19 @@
 {
+  "include": ["src", "types"],
   "compilerOptions": {
-    "target": "es6",
-    "module": "UMD",
-    "moduleResolution": "node",
-    "outDir": "./dist",
+    "module": "esnext",
+    "lib": ["dom", "esnext"],
+    "importHelpers": true,
+    "declaration": true,
     "sourceMap": true,
+    "rootDir": "./src",
     "strict": true,
-    "noImplicitAny": false,
-    "noImplicitThis": true,
-    "noUnusedLocals": true,
-    "alwaysStrict": true,
     "noImplicitReturns": true,
-    "experimentalDecorators": true,
-    "strictNullChecks": false,
-    "esModuleInterop": true,
-    "allowSyntheticDefaultImports": true,
-    "pretty": true
+    "noFallthroughCasesInSwitch": true,
+    "noUnusedLocals": true,
+    "noUnusedParameters": true,
+    "moduleResolution": "node",
+    "forceConsistentCasingInFileNames": true,
+    "noEmit": true
   }
 }
