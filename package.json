@@ -1,7 +1,7 @@
 {
   "name": "flattenizer",
   "description": "Small library for flattening and unflattening objects.",
-  "version": "2.0.3-0",
+  "version": "1.0.3",
   "author": "Sean Hellebusch <sahellebusch@gmail.com>",
   "bugs": {
     "url": "https://github.com/sahellebusch/flattenizer/issues"
@@ -51,6 +51,10 @@
     "build": "tsdx build",
     "lint": "tsdx lint",
     "lint:fix": "tsdx lint --fix",
+    "docs:extract": "api-extractor run --local --verbose",
+    "docs:markdown": "api-documenter markdown -i api -o docs",
+    "docs:generate": "npm run docs:extract && npm run docs:markdown",
+    "postbuild": "api-extractor run --local --verbose",
     "prepare": "tsdx build",
     "release": "np",
     "size": "size-limit",

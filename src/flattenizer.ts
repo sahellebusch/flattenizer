@@ -1,16 +1,55 @@
+/**
+ * @public
+ */
 export type Nullable<A> = A | null | undefined;
+
+/**
+ * @public
+ */
 export type Delimiter = string;
 
+/**
+ * @public
+ */
 export interface IFlattened<P> {
   [path: string]: P;
 }
 
+/**
+ * @public
+ */
 export interface IUnflattened<P> {
   [key: string]: P | P[] | IUnflattened<P>;
 }
 
 /**
- * Flattens an object
+ * Flattens an object.
+ *
+ * @example
+ * ```
+ * let unflattened = {
+ *    name: 'Sean',
+ *    city: 'Kansas City',
+ *    favBreweries: [
+ *        {
+ *            name: 'Double Shift',
+ *            favBeer: 'Sister Abbey'
+ *        },
+ *        {
+ *           name: 'KC Bier Co',
+ *            favBeer: 'Helles'
+ *        }
+ *    ]
+ *};
+ *
+ * flatten(unflattened)
+ * { name: 'Sean',
+ *   city: 'Kansas City',
+ *  'favBreweries.0.name': 'Double Shift',
+ *  'favBreweries.0.favBeer': 'Sister Abbey',
+ *  'favBreweries.1.name': 'KC Bier Co',
+ *   'favBreweries.1.favBeer': 'Helles' }
+ *```
  *
  * @param unflattened - the object to flatten
  * @param delimiter   - the delimiter to be used when flattening the object. Defalts to '.'.
@@ -78,6 +117,24 @@ const explodeProperty = (
 
 /**
  * Unflattens an object with compressed keys.
+ *
+ * @example
+ * ```
+ * let flattened = { name: 'Sean',
+ *   city: 'Kansas City',
+ *  'favBreweries.0.name': 'Double Shift',
+ *  'favBreweries.0.favBeer': 'Sister Abbey',
+ *  'favBreweries.1.name': 'KC Bier Co',
+ *   'favBreweries.1.favBeer': 'Helles' }
+ *
+ * unflatten(flattened)
+ *
+ *  { name: 'Sean',
+ *    city: 'Kansas City',
+ *    favBreweries:
+ *     [ { name: 'Double Shift', favBeer: 'Sister Abbey' },
+ *       { name: 'KC Bier Co', favBeer: 'Helles' } ] }
+ *```
  *
  * @param flattened - object to unflatten
  * @param delimiter - the delimiter to be used when unflattening the object. Defaults to '.'.
