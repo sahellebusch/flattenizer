@@ -2,14 +2,13 @@
 
 Functions to flatten and unflatten nested JavaScript objects into a single level.  Keys are enumerated if they collide.
 
-  * [API](#api)
+- [API](#api)
 - [Developing](#developing)
   * [Commands](#commands)
   * [Configuration](#configuration)
   * [Continuous Integration](#continuous-integration)
-
-
-# API
+  
+## API
 
 The [code](./src/flattenizer.ts) is documented using [`tsdoc`](https://tsdoc.org/).  [The tests](./src/flattenizer.spec.ts) are helpful to read as well. There are also docs generated using [`api-extractor`](https://api-extractor.com/) [in the docs folder](./docs/index.md).
 
