@@ -104,7 +104,7 @@ const explodeProperty = (
     const currKey = keys[idx];
     let nextKeyVal: any;
 
-    if(idx === 0 && currKey === '__proto__') {
+    if (idx === 0 && currKey === '__proto__') {
       return;
     }
 
@@ -121,6 +121,10 @@ const explodeProperty = (
 
 /**
  * Unflattens an object with compressed keys.
+ *
+ * @remarks
+ * This function will not unflatten any properties on the __proto__ object
+ * property in order to prevent pollution.
  *
  * @example
  * ```
