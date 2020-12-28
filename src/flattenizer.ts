@@ -102,7 +102,11 @@ const explodeProperty = (
 
   for (let idx = 0; idx < lastKeyIndex; idx++) {
     const currKey = keys[idx];
-    let nextKeyVal;
+    let nextKeyVal: any;
+
+    if(idx === 0 && currKey === '__proto__') {
+      return;
+    }
 
     if (!currUnflattened.hasOwnProperty(currKey)) {
       nextKeyVal = parseInt(keys[idx + 1], 10);

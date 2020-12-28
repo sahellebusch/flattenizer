@@ -113,7 +113,7 @@
           "excerptTokens": [
             {
               "kind": "Content",
-              "text": "export declare interface IFlattened<P> "
+              "text": "export interface IFlattened<P> "
             }
           ],
           "releaseTag": "Public",
@@ -184,7 +184,7 @@
           "excerptTokens": [
             {
               "kind": "Content",
-              "text": "export declare interface IUnflattened<P> "
+              "text": "export interface IUnflattened<P> "
             }
           ],
           "releaseTag": "Public",
