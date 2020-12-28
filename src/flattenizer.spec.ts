@@ -322,4 +322,27 @@ describe('Flattenizer!', () => {
       expect(unflatten(flattened)).toEqual(expected);
     });
   });
+
+  test('will not pollute the object __proto__ property', () => {
+    const flattened = {
+      '__proto__.polluted': true,
+      'prop1.subProp1': 'value',
+      'prop2.subProp2.subSubProp1': 12,
+    };
+
+    const expected = {
+      prop1: {
+        subProp1: 'value',
+      },
+      prop2: {
+        subProp2: {
+          subSubProp1: 12,
+        },
+      },
+    };
+
+    const result = unflatten(flattened);
+    expect(result?.__proto__?.polluted).not.toBeDefined();
+    expect(result).toEqual(expected);
+  });
 });

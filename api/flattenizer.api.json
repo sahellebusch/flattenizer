@@ -113,7 +113,7 @@
           "excerptTokens": [
             {
               "kind": "Content",
-              "text": "export declare interface IFlattened<P> "
+              "text": "export interface IFlattened<P> "
             }
           ],
           "releaseTag": "Public",
@@ -184,7 +184,7 @@
           "excerptTokens": [
             {
               "kind": "Content",
-              "text": "export declare interface IUnflattened<P> "
+              "text": "export interface IUnflattened<P> "
             }
           ],
           "releaseTag": "Public",
@@ -298,7 +298,7 @@
         {
           "kind": "Variable",
           "canonicalReference": "flattenizer!unflatten:var",
-          "docComment": "/**\n * Unflattens an object with compressed keys.\n *\n * @param flattened - object to unflatten\n *\n * @param delimiter - the delimiter to be used when unflattening the object. Defaults to '.'.\n *\n * @returns The unflattened object, empty if provided object is undefined.\n *\n * @example\n * ```\n * let flattened = { name: 'Sean',\n *   city: 'Kansas City',\n *  'favBreweries.0.name': 'Double Shift',\n *  'favBreweries.0.favBeer': 'Sister Abbey',\n *  'favBreweries.1.name': 'KC Bier Co',\n *   'favBreweries.1.favBeer': 'Helles' }\n *\n * unflatten(flattened)\n *\n *  { name: 'Sean',\n *    city: 'Kansas City',\n *    favBreweries:\n *     [ { name: 'Double Shift', favBeer: 'Sister Abbey' },\n *       { name: 'KC Bier Co', favBeer: 'Helles' } ] }\n * ```\n *\n * @public\n */\n",
+          "docComment": "/**\n * Unflattens an object with compressed keys.\n *\n * @remarks\n *\n * This function will not unflatten any properties on the __proto__ object property in order to prevent pollution.\n *\n * @param flattened - object to unflatten\n *\n * @param delimiter - the delimiter to be used when unflattening the object. Defaults to '.'.\n *\n * @returns The unflattened object, empty if provided object is undefined.\n *\n * @example\n * ```\n * let flattened = { name: 'Sean',\n *   city: 'Kansas City',\n *  'favBreweries.0.name': 'Double Shift',\n *  'favBreweries.0.favBeer': 'Sister Abbey',\n *  'favBreweries.1.name': 'KC Bier Co',\n *   'favBreweries.1.favBeer': 'Helles' }\n *\n * unflatten(flattened)\n *\n *  { name: 'Sean',\n *    city: 'Kansas City',\n *    favBreweries:\n *     [ { name: 'Double Shift', favBeer: 'Sister Abbey' },\n *       { name: 'KC Bier Co', favBeer: 'Helles' } ] }\n * ```\n *\n * @public\n */\n",
           "excerptTokens": [
             {
               "kind": "Content",
