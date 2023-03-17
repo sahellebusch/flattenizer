@@ -1,19 +1,176 @@
 {
   "metadata": {
     "toolPackage": "@microsoft/api-extractor",
-    "toolVersion": "7.12.1",
-    "schemaVersion": 1003,
-    "oldestForwardsCompatibleVersion": 1001
+    "toolVersion": "7.34.4",
+    "schemaVersion": 1011,
+    "oldestForwardsCompatibleVersion": 1001,
+    "tsdocConfig": {
+      "$schema": "https://developer.microsoft.com/json-schemas/tsdoc/v0/tsdoc.schema.json",
+      "noStandardTags": true,
+      "tagDefinitions": [
+        {
+          "tagName": "@alpha",
+          "syntaxKind": "modifier"
+        },
+        {
+          "tagName": "@beta",
+          "syntaxKind": "modifier"
+        },
+        {
+          "tagName": "@defaultValue",
+          "syntaxKind": "block"
+        },
+        {
+          "tagName": "@decorator",
+          "syntaxKind": "block",
+          "allowMultiple": true
+        },
+        {
+          "tagName": "@deprecated",
+          "syntaxKind": "block"
+        },
+        {
+          "tagName": "@eventProperty",
+          "syntaxKind": "modifier"
+        },
+        {
+          "tagName": "@example",
+          "syntaxKind": "block",
+          "allowMultiple": true
+        },
+        {
+          "tagName": "@experimental",
+          "syntaxKind": "modifier"
+        },
+        {
+          "tagName": "@inheritDoc",
+          "syntaxKind": "inline"
+        },
+        {
+          "tagName": "@internal",
+          "syntaxKind": "modifier"
+        },
+        {
+          "tagName": "@label",
+          "syntaxKind": "inline"
+        },
+        {
+          "tagName": "@link",
+          "syntaxKind": "inline",
+          "allowMultiple": true
+        },
+        {
+          "tagName": "@override",
+          "syntaxKind": "modifier"
+        },
+        {
+          "tagName": "@packageDocumentation",
+          "syntaxKind": "modifier"
+        },
+        {
+          "tagName": "@param",
+          "syntaxKind": "block",
+          "allowMultiple": true
+        },
+        {
+          "tagName": "@privateRemarks",
+          "syntaxKind": "block"
+        },
+        {
+          "tagName": "@public",
+          "syntaxKind": "modifier"
+        },
+        {
+          "tagName": "@readonly",
+          "syntaxKind": "modifier"
+        },
+        {
+          "tagName": "@remarks",
+          "syntaxKind": "block"
+        },
+        {
+          "tagName": "@returns",
+          "syntaxKind": "block"
+        },
+        {
+          "tagName": "@sealed",
+          "syntaxKind": "modifier"
+        },
+        {
+          "tagName": "@see",
+          "syntaxKind": "block"
+        },
+        {
+          "tagName": "@throws",
+          "syntaxKind": "block",
+          "allowMultiple": true
+        },
+        {
+          "tagName": "@typeParam",
+          "syntaxKind": "block",
+          "allowMultiple": true
+        },
+        {
+          "tagName": "@virtual",
+          "syntaxKind": "modifier"
+        },
+        {
+          "tagName": "@betaDocumentation",
+          "syntaxKind": "modifier"
+        },
+        {
+          "tagName": "@internalRemarks",
+          "syntaxKind": "block"
+        },
+        {
+          "tagName": "@preapproved",
+          "syntaxKind": "modifier"
+        }
+      ],
+      "supportForTags": {
+        "@alpha": true,
+        "@beta": true,
+        "@defaultValue": true,
+        "@decorator": true,
+        "@deprecated": true,
+        "@eventProperty": true,
+        "@example": true,
+        "@experimental": true,
+        "@inheritDoc": true,
+        "@internal": true,
+        "@label": true,
+        "@link": true,
+        "@override": true,
+        "@packageDocumentation": true,
+        "@param": true,
+        "@privateRemarks": true,
+        "@public": true,
+        "@readonly": true,
+        "@remarks": true,
+        "@returns": true,
+        "@sealed": true,
+        "@see": true,
+        "@throws": true,
+        "@typeParam": true,
+        "@virtual": true,
+        "@betaDocumentation": true,
+        "@internalRemarks": true,
+        "@preapproved": true
+      },
+      "reportUnsupportedHtmlElements": false
+    }
   },
   "kind": "Package",
   "canonicalReference": "flattenizer!",
   "docComment": "/**\n * A library for flattening and unflattening objects.\n *\n * @remarks\n *\n * Both exported functions will accept either undefined or null and return the same.\n *\n * @packageDocumentation\n */\n",
   "name": "flattenizer",
+  "preserveMemberOrder": false,
   "members": [
     {
       "kind": "EntryPoint",
       "canonicalReference": "flattenizer!",
       "name": "",
+      "preserveMemberOrder": false,
       "members": [
         {
           "kind": "TypeAlias",
@@ -33,6 +190,7 @@
               "text": ";"
             }
           ],
+          "fileUrlPath": "dist/flattenizer.d.ts",
           "releaseTag": "Public",
           "name": "Delimiter",
           "typeTokenRange": {
@@ -99,6 +257,8 @@
               "text": "<A>"
             }
           ],
+          "fileUrlPath": "dist/flattenizer.d.ts",
+          "isReadonly": true,
           "releaseTag": "Public",
           "name": "flatten",
           "variableTypeTokenRange": {
@@ -116,6 +276,7 @@
               "text": "export interface IFlattened<P> "
             }
           ],
+          "fileUrlPath": "dist/flattenizer.d.ts",
           "releaseTag": "Public",
           "typeParameters": [
             {
@@ -131,6 +292,7 @@
             }
           ],
           "name": "IFlattened",
+          "preserveMemberOrder": false,
           "members": [
             {
               "kind": "IndexSignature",
@@ -158,6 +320,7 @@
                   "text": ";"
                 }
               ],
+              "isReadonly": false,
               "returnTypeTokenRange": {
                 "startIndex": 3,
                 "endIndex": 4
@@ -170,7 +333,8 @@
                   "parameterTypeTokenRange": {
                     "startIndex": 1,
                     "endIndex": 2
-                  }
+                  },
+                  "isOptional": false
                 }
               ]
             }
@@ -187,6 +351,7 @@
               "text": "export interface IUnflattened<P> "
             }
           ],
+          "fileUrlPath": "dist/flattenizer.d.ts",
           "releaseTag": "Public",
           "typeParameters": [
             {
@@ -202,6 +367,7 @@
             }
           ],
           "name": "IUnflattened",
+          "preserveMemberOrder": false,
           "members": [
             {
               "kind": "IndexSignature",
@@ -238,6 +404,7 @@
                   "text": ";"
                 }
               ],
+              "isReadonly": false,
               "returnTypeTokenRange": {
                 "startIndex": 3,
                 "endIndex": 6
@@ -250,7 +417,8 @@
                   "parameterTypeTokenRange": {
                     "startIndex": 1,
                     "endIndex": 2
-                  }
+                  },
+                  "isOptional": false
                 }
               ]
             }
@@ -275,6 +443,7 @@
               "text": ";"
             }
           ],
+          "fileUrlPath": "dist/flattenizer.d.ts",
           "releaseTag": "Public",
           "name": "Nullable",
           "typeParameters": [
@@ -354,6 +523,8 @@
               "text": "<B>"
             }
           ],
+          "fileUrlPath": "dist/flattenizer.d.ts",
+          "isReadonly": true,
           "releaseTag": "Public",
           "name": "unflatten",
           "variableTypeTokenRange": {
