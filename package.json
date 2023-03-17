@@ -37,6 +37,7 @@
   "license": "MIT",
   "main": "dist/index.js",
   "module": "dist/flattenizer.esm.js",
+  "types": "dist/index.d.ts",
   "peerDependencies": {},
   "prettier": {
     "printWidth": 80,
