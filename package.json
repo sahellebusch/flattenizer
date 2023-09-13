@@ -1,7 +1,7 @@
 {
   "name": "flattenizer",
   "description": "Small library for flattening and unflattening objects.",
-  "version": "1.1.2",
+  "version": "1.1.3",
   "author": "Sean Hellebusch <sahellebusch@gmail.com>",
   "bugs": {
     "url": "https://github.com/sahellebusch/flattenizer/issues"
