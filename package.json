@@ -11,7 +11,7 @@
     "@microsoft/api-extractor": "^7.34.4",
     "@size-limit/preset-small-lib": "^8.2.4",
     "husky": "^8.0.3",
-    "np": "^7.6.3",
+    "np": "^8.0.4",
     "size-limit": "^8.2.4",
     "tsdx": "^0.14.1",
     "tslib": "^2.5.0",
