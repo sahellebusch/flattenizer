@@ -323,26 +323,111 @@ describe('Flattenizer!', () => {
     });
   });
 
-  test('will not pollute the object __proto__ property', () => {
-    const flattened = {
-      '__proto__.polluted': true,
-      'prop1.subProp1': 'value',
-      'prop2.subProp2.subSubProp1': 12,
-    };
+  describe('prototype pollution prevention', () => {
+    test('will not pollute the object __proto__ property', () => {
+      const flattened = {
+        '__proto__.polluted': true,
+        'prop1.subProp1': 'value',
+        'prop2.subProp2.subSubProp1': 12,
+      };
 
-    const expected = {
-      prop1: {
-        subProp1: 'value',
-      },
-      prop2: {
-        subProp2: {
-          subSubProp1: 12,
+      const expected = {
+        prop1: {
+          subProp1: 'value',
         },
-      },
-    };
+        prop2: {
+          subProp2: {
+            subSubProp1: 12,
+          },
+        },
+      };
 
-    const result = unflatten(flattened);
-    expect(result?.__proto__?.polluted).not.toBeDefined();
-    expect(result).toEqual(expected);
+      const result = unflatten(flattened);
+      expect(result?.__proto__?.polluted).not.toBeDefined();
+      expect(result).toEqual(expected);
+    });
+
+    test('will not pollute via constructor.prototype', () => {
+      const flattened = {
+        'constructor.prototype.polluted': 'yes',
+        'prop1.subProp1': 'value',
+      };
+
+      const expected = {
+        prop1: {
+          subProp1: 'value',
+        },
+      };
+
+      const result = unflatten(flattened);
+      expect(({} as any).polluted).toBeUndefined();
+      expect(result).toEqual(expected);
+    });
+
+    test('will not pollute via nested __proto__ path', () => {
+      const flattened = {
+        'a.__proto__.polluted': 'yes',
+        'prop1.subProp1': 'value',
+      };
+
+      const expected = {
+        prop1: {
+          subProp1: 'value',
+        },
+      };
+
+      const result = unflatten(flattened);
+      expect(({} as any).polluted).toBeUndefined();
+      expect(result).toEqual(expected);
+    });
+
+    test('will not pollute via prototype key', () => {
+      const flattened = {
+        'prototype.polluted': 'yes',
+        'prop1.subProp1': 'value',
+      };
+
+      const expected = {
+        prop1: {
+          subProp1: 'value',
+        },
+      };
+
+      const result = unflatten(flattened);
+      expect(({} as any).polluted).toBeUndefined();
+      expect(result).toEqual(expected);
+    });
+
+    test('uses captured hasOwnProperty reference from module load time', () => {
+      // This test verifies that the module captures hasOwnProperty at load time.
+      // Even if hasOwnProperty is overridden after the module loads, the module
+      // continues to use the original reference, preventing bypass attacks.
+      // The key protection is that dangerous keys (constructor, prototype, __proto__)
+      // are blocked regardless of hasOwnProperty behavior.
+      const originalHasOwnProperty = Object.prototype.hasOwnProperty;
+      Object.prototype.hasOwnProperty = (() => true) as any;
+
+      try {
+        const flattened = {
+          'constructor.prototype.polluted': 'yes',
+          'prop1.subProp1': 'value',
+        };
+
+        const expected = {
+          prop1: {
+            subProp1: 'value',
+          },
+        };
+
+        // The unflatten should still work correctly because:
+        // 1. The module captured hasOwnProperty at load time (before override)
+        // 2. Dangerous keys are blocked before any hasOwnProperty check
+        const result = unflatten(flattened);
+        expect(({} as any).polluted).toBeUndefined();
+        expect(result).toEqual(expected);
+      } finally {
+        Object.prototype.hasOwnProperty = originalHasOwnProperty;
+      }
+    });
   });
 });

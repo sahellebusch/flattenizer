@@ -90,6 +90,16 @@ export const flatten = <A extends IFlattened<any>, B extends IUnflattened<any>>(
   return flattened;
 };
 
+// Keys that could lead to prototype pollution
+const DANGEROUS_KEYS = ['__proto__', 'prototype', 'constructor'];
+
+const isDangerousKey = (key: string): boolean =>
+  DANGEROUS_KEYS.includes(key);
+
+// Store reference to original hasOwnProperty at module load time to prevent
+// bypass attacks that override Object.prototype.hasOwnProperty
+const hasOwnProperty = Object.prototype.hasOwnProperty;
+
 const explodeProperty = (
   currUnflattened: Record<string | number, any>,
   key: string,
@@ -100,15 +110,20 @@ const explodeProperty = (
   const value = flattenedObj[key];
   const lastKeyIndex = keys.length - 1;
 
+  // Check if any key in the path could lead to prototype pollution
+  for (let i = 0; i < keys.length; i++) {
+    if (isDangerousKey(keys[i])) {
+      return;
+    }
+  }
+
   for (let idx = 0; idx < lastKeyIndex; idx++) {
     const currKey = keys[idx];
     let nextKeyVal: any;
 
-    if (idx === 0 && currKey === '__proto__') {
-      return;
-    }
-
-    if (!currUnflattened.hasOwnProperty(currKey)) {
+    // Use saved reference to hasOwnProperty to prevent bypass via
+    // overriding hasOwnProperty on Object.prototype after module load
+    if (!hasOwnProperty.call(currUnflattened, currKey)) {
       nextKeyVal = parseInt(keys[idx + 1], 10);
       currUnflattened[currKey] = isNaN(nextKeyVal) ? {} : [];
     }
@@ -123,8 +138,10 @@ const explodeProperty = (
  * Unflattens an object with compressed keys.
  *
  * @remarks
- * This function will not unflatten any properties on the __proto__ object
- * property in order to prevent pollution.
+ * This function blocks dangerous keys (__proto__, prototype, constructor)
+ * anywhere in the key path to prevent prototype pollution attacks. It also
+ * captures a reference to hasOwnProperty at module load time to prevent
+ * bypass attacks that override Object.prototype.hasOwnProperty.
  *
  * @example
  * ```
