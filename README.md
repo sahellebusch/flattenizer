@@ -1,49 +1,100 @@
 # Flattenizer
 
-Functions to flatten and unflatten nested JavaScript objects into a single level.  Keys are enumerated if they collide.
+Functions to flatten and unflatten nested JavaScript objects into a single level.
 
-- [API](#api)
-- [Developing](#developing)
-  * [Commands](#commands)
-  * [Configuration](#configuration)
-  * [Continuous Integration](#continuous-integration)
-  
-## API
-
-The [code](./src/flattenizer.ts) is documented using [`tsdoc`](https://tsdoc.org/).  [The tests](./src/flattenizer.spec.ts) are helpful to read as well. There are also docs generated using [`api-extractor`](https://api-extractor.com/) [in the docs folder](./docs/index.md).
-
-## Developing 
-
-### Commands
-
-To run:
+## Installation
 
 ```bash
-npm start
+npm install flattenizer
 ```
 
-This builds to `/dist` and runs the project in watch mode so any edits you save inside `src` causes a rebuild to `/dist`.
+## Usage
 
-To do a one-off build, use `npm run build`.
+```javascript
+import { flatten, unflatten } from 'flattenizer';
 
-To run tests, use `npm test`.
+// Flatten a nested object
+const nested = {
+  name: 'Sean',
+  city: 'Kansas City',
+  favBreweries: [
+    { name: 'Double Shift', favBeer: 'Sister Abbey' },
+    { name: 'KC Bier Co', favBeer: 'Helles' }
+  ]
+};
 
-### Configuration
+flatten(nested);
+// {
+//   name: 'Sean',
+//   city: 'Kansas City',
+//   'favBreweries.0.name': 'Double Shift',
+//   'favBreweries.0.favBeer': 'Sister Abbey',
+//   'favBreweries.1.name': 'KC Bier Co',
+//   'favBreweries.1.favBeer': 'Helles'
+// }
 
-Code quality is set up for you with `prettier`, `husky`, and `lint-staged`. Adjust the respective fields in `package.json` accordingly.
+// Unflatten back to nested
+const flat = {
+  name: 'Sean',
+  city: 'Kansas City',
+  'favBreweries.0.name': 'Double Shift',
+  'favBreweries.0.favBeer': 'Sister Abbey',
+  'favBreweries.1.name': 'KC Bier Co',
+  'favBreweries.1.favBeer': 'Helles'
+};
 
-#### Jest
+unflatten(flat);
+// {
+//   name: 'Sean',
+//   city: 'Kansas City',
+//   favBreweries: [
+//     { name: 'Double Shift', favBeer: 'Sister Abbey' },
+//     { name: 'KC Bier Co', favBeer: 'Helles' }
+//   ]
+// }
+```
 
-Jest tests are set up to run with `npm test`.
+## API
 
-#### Bundle Analysis
+### `flatten<A, B>(unflattened: B | null | undefined, delimiter?: string): A | null | undefined`
 
-[`size-limit`](https://github.com/ai/size-limit) is set up to calculate the real cost of your library with `npm run size` and visualize the bundle with `npm run analyze`.
+Flattens a nested object into a single-level object with dot-separated keys.
 
-### Continuous Integration
+- **unflattened** - The nested object to flatten
+- **delimiter** - The delimiter to use (default: `'.'`)
+- **returns** - The flattened object, or `null`/`undefined` if input is `null`/`undefined`
 
-#### GitHub Actions
+### `unflatten<A, B>(flattened: A | null | undefined, delimiter?: string): B | null | undefined`
 
-Two actions are added by default:
+Unflattens a flat object with dot-separated keys back into a nested object.
 
-- `main` which installs deps w/ cache, lints, tests, checks size and builds on all pushes against a Node and OS matrix
+- **flattened** - The flat object to unflatten
+- **delimiter** - The delimiter to use (default: `'.'`)
+- **returns** - The nested object, or `null`/`undefined` if input is `null`/`undefined`
+
+**Note:** Dangerous keys (`__proto__`, `prototype`, `constructor`) are blocked to prevent prototype pollution attacks.
+
+## Custom Delimiters
+
+Both functions accept an optional delimiter:
+
+```javascript
+flatten({ a: { b: 1 } }, '|');
+// { 'a|b': 1 }
+
+unflatten({ 'a|b': 1 }, '|');
+// { a: { b: 1 } }
+```
+
+## Development
+
+```bash
+npm install    # Install dependencies
+npm test       # Run tests
+npm run build  # Build for production
+npm start      # Watch mode
+```
+
+## License
+
+MIT
