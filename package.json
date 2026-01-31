@@ -1,44 +1,42 @@
 {
   "name": "flattenizer",
   "description": "Small library for flattening and unflattening objects.",
-  "version": "1.1.4",
+  "version": "1.2.0",
   "author": "Sean Hellebusch <sahellebusch@gmail.com>",
   "bugs": {
     "url": "https://github.com/sahellebusch/flattenizer/issues"
   },
   "devDependencies": {
-    "@microsoft/api-documenter": "^7.21.5",
-    "@microsoft/api-extractor": "^7.34.4",
-    "@size-limit/preset-small-lib": "^8.2.4",
-    "@types/jest": "^30.0.0",
-    "husky": "^8.0.3",
-    "np": "^8.0.4",
-    "size-limit": "^8.2.4",
-    "tsdx": "^0.14.1",
-    "tslib": "^2.5.0",
-    "typescript": "^4.1.3"
+    "@types/jest": "^29.5.0",
+    "@types/node": "^22.0.0",
+    "jest": "^29.7.0",
+    "prettier": "^3.4.0",
+    "ts-jest": "^29.2.0",
+    "tsup": "^8.3.0",
+    "typescript": "^5.7.0"
   },
   "engines": {
-    "node": ">=10"
+    "node": ">=18"
   },
   "files": [
-    "dist",
-    "src"
+    "dist"
   ],
   "homepage": "https://github.com/sahellebusch/flattenizer#readme",
-  "husky": {
-    "hooks": {
-      "pre-commit": "tsdx lint"
-    }
-  },
   "keywords": [
     "flatten",
     "unflatten"
   ],
   "license": "MIT",
   "main": "dist/index.js",
-  "module": "dist/flattenizer.esm.js",
+  "module": "dist/index.mjs",
   "types": "dist/index.d.ts",
+  "exports": {
+    ".": {
+      "types": "./dist/index.d.ts",
+      "import": "./dist/index.mjs",
+      "require": "./dist/index.js"
+    }
+  },
   "prettier": {
     "printWidth": 80,
     "semi": true,
@@ -50,29 +48,12 @@
     "url": "git+https://github.com/sahellebusch/flattenizer.git"
   },
   "scripts": {
-    "analyze": "size-limit --why",
-    "build": "tsdx build",
-    "lint": "tsdx lint",
-    "lint:fix": "tsdx lint --fix",
-    "docs:extract": "api-extractor run --local --verbose",
-    "docs:markdown": "api-documenter markdown -i api -o docs",
-    "docs:generate": "npm run docs:extract && npm run docs:markdown",
-    "postbuild": "api-extractor run --local --verbose",
-    "prepare": "tsdx build",
+    "build": "tsup",
+    "format": "prettier --write src",
+    "format:check": "prettier --check src",
+    "prepublishOnly": "npm run build",
     "release": "np",
-    "size": "size-limit",
-    "start": "tsdx watch",
-    "test": "tsdx test"
-  },
-  "size-limit": [
-    {
-      "path": "dist/flattenizer.cjs.production.min.js",
-      "limit": "10 KB"
-    },
-    {
-      "path": "dist/flattenizer.esm.js",
-      "limit": "10 KB"
-    }
-  ],
-  "typings": "dist/index.d.ts"
+    "start": "tsup --watch",
+    "test": "jest"
+  }
 }
