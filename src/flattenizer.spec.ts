@@ -160,6 +160,27 @@ describe('Flattenizer!', () => {
 
       expect(flatten(unflattened)).toEqual(expected);
     });
+
+    test('will not pollute via __proto__ key assignment', () => {
+      const original = (Object.prototype as any).polluted;
+      delete (Object.prototype as any).polluted;
+
+      try {
+        // JSON.parse creates a normal data property named "__proto__"
+        const unflattened = JSON.parse('{"__proto__":"yes","safe":1}');
+        const result = flatten(unflattened as any) as any;
+
+        expect(({} as any).polluted).toBeUndefined();
+        expect(result.safe).toBe(1);
+        expect(result.__proto__).toBe('yes');
+      } finally {
+        if (original !== undefined) {
+          (Object.prototype as any).polluted = original;
+        } else {
+          delete (Object.prototype as any).polluted;
+        }
+      }
+    });
   });
 
   describe('.unflatten', () => {
@@ -427,6 +448,35 @@ describe('Flattenizer!', () => {
         expect(result).toEqual(expected);
       } finally {
         Object.prototype.hasOwnProperty = originalHasOwnProperty;
+      }
+    });
+
+    test('cannot be bypassed by overriding hasOwnProperty before importing the module', () => {
+      const originalHasOwnProperty = Object.prototype.hasOwnProperty;
+      const originalPolluted = (Object.prototype as any).polluted;
+      delete (Object.prototype as any).polluted;
+
+      try {
+        // Attacker-controlled environment: poison hasOwnProperty BEFORE import/require
+        Object.prototype.hasOwnProperty = (() => true) as any;
+
+        jest.resetModules();
+        // eslint-disable-next-line @typescript-eslint/no-var-requires
+        const { unflatten: freshUnflatten } = require('./flattenizer');
+
+        const flattened = { 'constructor.prototype.polluted': 'yes', ok: 1 };
+        const result = freshUnflatten(flattened);
+
+        expect(({} as any).polluted).toBeUndefined();
+        expect(result).toEqual({ ok: 1 });
+      } finally {
+        Object.prototype.hasOwnProperty = originalHasOwnProperty;
+        if (originalPolluted !== undefined) {
+          (Object.prototype as any).polluted = originalPolluted;
+        } else {
+          delete (Object.prototype as any).polluted;
+        }
+        jest.resetModules();
       }
     });
   });

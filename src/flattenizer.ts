@@ -74,12 +74,16 @@ export const flatten = <A extends IFlattened<any>, B extends IUnflattened<any>>(
       if (typeof value === 'object' && value !== null) {
         const flatObject = flatten(value, delimiter);
 
-        for (const subKey in flatObject) {
+        for (const subKey of Object.keys(flatObject as any)) {
           // append to create new key value and assign it's value
-          acc[`${key}${delimiter}${subKey}`] = flatObject[subKey];
+          safeSet(
+            acc,
+            `${key}${delimiter}${subKey}`,
+            (flatObject as any)[subKey]
+          );
         }
       } else {
-        acc[key] = value;
+        safeSet(acc, key, value);
       }
 
       return acc;
@@ -93,8 +97,24 @@ export const flatten = <A extends IFlattened<any>, B extends IUnflattened<any>>(
 // Keys that could lead to prototype pollution
 const DANGEROUS_KEYS = ['__proto__', 'prototype', 'constructor'];
 
-const isDangerousKey = (key: string): boolean =>
-  DANGEROUS_KEYS.includes(key);
+const isDangerousKey = (key: string): boolean => DANGEROUS_KEYS.includes(key);
+
+/**
+ * Safely sets a property on an object without triggering special setters
+ * like `__proto__` that can mutate prototypes.
+ */
+const safeSet = (
+  obj: Record<string | number, any>,
+  key: string | number,
+  value: any
+) => {
+  Object.defineProperty(obj, key, {
+    value,
+    writable: true,
+    enumerable: true,
+    configurable: true,
+  });
+};
 
 // Store reference to original hasOwnProperty at module load time to prevent
 // bypass attacks that override Object.prototype.hasOwnProperty
@@ -125,13 +145,13 @@ const explodeProperty = (
     // overriding hasOwnProperty on Object.prototype after module load
     if (!hasOwnProperty.call(currUnflattened, currKey)) {
       nextKeyVal = parseInt(keys[idx + 1], 10);
-      currUnflattened[currKey] = isNaN(nextKeyVal) ? {} : [];
+      safeSet(currUnflattened, currKey, isNaN(nextKeyVal) ? {} : []);
     }
 
     currUnflattened = currUnflattened[currKey];
   }
 
-  currUnflattened[keys[lastKeyIndex]] = value;
+  safeSet(currUnflattened, keys[lastKeyIndex], value);
 };
 
 /**
