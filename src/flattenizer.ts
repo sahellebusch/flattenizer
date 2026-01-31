@@ -76,7 +76,11 @@ export const flatten = <A extends IFlattened<any>, B extends IUnflattened<any>>(
 
         for (const subKey of Object.keys(flatObject as any)) {
           // append to create new key value and assign it's value
-          safeSet(acc, `${key}${delimiter}${subKey}`, (flatObject as any)[subKey]);
+          safeSet(
+            acc,
+            `${key}${delimiter}${subKey}`,
+            (flatObject as any)[subKey]
+          );
         }
       } else {
         safeSet(acc, key, value);
@@ -93,14 +97,17 @@ export const flatten = <A extends IFlattened<any>, B extends IUnflattened<any>>(
 // Keys that could lead to prototype pollution
 const DANGEROUS_KEYS = ['__proto__', 'prototype', 'constructor'];
 
-const isDangerousKey = (key: string): boolean =>
-  DANGEROUS_KEYS.includes(key);
+const isDangerousKey = (key: string): boolean => DANGEROUS_KEYS.includes(key);
 
 /**
  * Safely sets a property on an object without triggering special setters
  * like `__proto__` that can mutate prototypes.
  */
-const safeSet = (obj: Record<string | number, any>, key: string | number, value: any) => {
+const safeSet = (
+  obj: Record<string | number, any>,
+  key: string | number,
+  value: any
+) => {
   Object.defineProperty(obj, key, {
     value,
     writable: true,
